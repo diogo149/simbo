@@ -18,6 +18,9 @@ def show_experiment(uuid): # not necessary, use single page app
 
 @app.route('/experiment/sample/<uuid>', methods=['GET'])
 def sample_experiment(uuid):
+    # TODO take in json (for personalization)
+    # TODO see if any precomputed settings are available
+    # TODO fill in missing fields with defaults
     return "TODO"
 
 

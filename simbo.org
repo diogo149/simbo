@@ -29,7 +29,6 @@ name: A/Z testing
  -e.g. filters on user demographics and most recent choices for certain variables
 -ideally we want online models only so we dont have to retrain for every data point
 * Optimization
--expected improvement formula from [[http://www.cs.ubc.ca/~hutter/papers/11-LION5-SMAC.pdf][here]]
 * Plotting
 -R's shiny?
 -[[http://stackoverflow.com/questions/15592144/how-to-integrate-r-shiny-into-current-application][integrating r into current platform]]
@@ -43,5 +42,7 @@ name: A/Z testing
  -invited speaker at NIPS (specifically on the causality workshop)
 * Future
 -include personalization
-
 -use online models
+* TODO
+how to seed the data (random search)
+distributions
