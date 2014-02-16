@@ -15,7 +15,7 @@ Despite being big believers in A/B testing, there are some flaws that we believe
 Requirements
 ---
 
-Python
+This was tested on:
 
 - Python 2.7.6
 

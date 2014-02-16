@@ -56,13 +56,33 @@ def experiment_results(uuid):
     return "Success"
 
 
+### Graph routes
+
+
+@app.route('/api/graph/importances/<string:uuid>', methods=['GET'])
+def importances_graph(graph, uuid):
+    k, v = load_importances(uuid)
+    return graphs.pie_chart(k, v)
+
+
+@app.route('/api/graph/results/<string:uuid>', methods=['GET'])
+def results_graph(graph, uuid):
+    xs, ys, keys = results_per_variable(uuid)
+    return graphs.scatter_chart(xs, ys, keys)
+
+
 ### Misc routes
 
 
-@app.route('/foobar', methods=['GET'])
-def sample_chart():
+@app.route('/test/pie', methods=['GET'])
+def sample_pie():
     return graphs.pie_chart(["Orange", "Banana", "Pear", "Kiwi", "Apple", "Strawberry", "Pineapple"],
                             [3, 4, 0, 1, 5, 7, 3])
+
+
+@app.route('/test/scatter')
+def sample_scatter():
+    return graphs.scatter_chart(((1,2,3,4,5),), ((5,4,3,2,1), ), ("test", ))
 
 
 @app.route('/', methods=['GET'])
