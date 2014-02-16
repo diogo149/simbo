@@ -20,10 +20,6 @@ app = flask.Flask(__name__,
 
 
 ### Schema routes
-@app.route('/foobar', methods=['GET'])
-def sample_chart():
-    return graphs.pie_chart(["Orange", "Banana", "Pear", "Kiwi", "Apple", "Strawberry", "Pineapple"],
-                            [3, 4, 0, 1, 5, 7, 3])
 
 @app.route('/api/schema/<string:uuid>', methods=['GET'])
 def show_schema(uuid): # not necessary, use single page app
@@ -61,6 +57,12 @@ def experiment_results(uuid):
 
 
 ### Misc routes
+
+
+@app.route('/foobar', methods=['GET'])
+def sample_chart():
+    return graphs.pie_chart(["Orange", "Banana", "Pear", "Kiwi", "Apple", "Strawberry", "Pineapple"],
+                            [3, 4, 0, 1, 5, 7, 3])
 
 
 @app.route('/', methods=['GET'])

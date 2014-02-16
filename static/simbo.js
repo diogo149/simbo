@@ -64,7 +64,7 @@ $(document).ready(function()    {
         var item = [var_name, distribution_input, default_input];
         variables.push(item);
         update_list();
-        
+
     });
 
     // user has completed editing an item
@@ -92,14 +92,16 @@ $(document).ready(function()    {
 
 	$("#foo").click(function() {
 		$.get( "/foobar", function( data ) {
-			$("#chart").html( data );
+			// $("#chart").html( data );
+                        console.log(data);
+                        eval(data);
 			alert( "Load was performed." );
 		});
 	});
 
 /*
     $('#init_round_btn').click(function()   {
-        var phrase_to_guess = $('input[name=phrase_to_guess]').val();        
+        var phrase_to_guess = $('input[name=phrase_to_guess]').val();
         $('input[name=phrase_to_guess]').val('');
         if (phrase_to_guess.length < 3) {
             alert("Your phrase should be at least 3 characters long!");
@@ -135,21 +137,21 @@ $(document).ready(function()    {
         round.curr_array = round.answer_array;
         points[round.host] += 1;
         draw();
-        $('#title').html("You didn't save " + round.friend_name + " :(");        
+        $('#title').html("You didn't save " + round.friend_name + " :(");
         round_over();
     };
-    
+
     function round_won()    {
         alert(round.guesser + " won! " + round.friend_name + " has been saved!");
         $('#title').html("You saved " + round.friend_name + "!");
         points[round.guesser] += 1;
-        draw();        
+        draw();
         round_over();
     };
-    
+
     function round_over()   {
         $('img').attr("src",round.friend_gif);
-        $("#guess_ui").fadeOut('slow');        
+        $("#guess_ui").fadeOut('slow');
         $("#new_round").show();
         // you get more points for doing this better, but this will work
         //$('#wrong_guesses').html("");
@@ -167,7 +169,7 @@ $(document).ready(function()    {
         }
         return false;
     };
-    
+
     function take_guess(guess)  {
         if (already_guessed(guess)) {
             alert("You already guessed this letter!");
@@ -200,15 +202,15 @@ $(document).ready(function()    {
 
         draw();
     };
-     
+
     /////// gameplay functions ///////
-    
+
     function start_round_1()  {
         var g = Math.floor(Math.random()*2);
         // 0 for Mandy, 1 for Deedee
-        
+
         var f = Math.floor(Math.random()*8);
-    
+
         var r = {
             guesser: g === 0 ? "Mandy" : "Deedee",
             host: g !== 0 ? "Mandy" : "Deedee",
@@ -219,13 +221,13 @@ $(document).ready(function()    {
             friend_name: friends_names[f],
             friend_gif: f_gifs[f]
         };
-        
+
         var dir_text = r.guesser + ", look away while ";
         dir_text += r.host + " enters a phrase.";
         $('#init_round_dir').html(dir_text);
-        $('#init_round').show();        
-        
-        return r;        
+        $('#init_round').show();
+
+        return r;
     }
 
     function start_round_2(phrase)    {
@@ -233,7 +235,7 @@ $(document).ready(function()    {
         $('#guess_ui').fadeIn('slow');
         var dir_text = round.guesser + ', please guess a letter!';
         $('#guess_dir').html(dir_text);
-        $('#title').html('You got to save ' + round.friend_name + '!');        
+        $('#title').html('You got to save ' + round.friend_name + '!');
         init_phrase_arrays(phrase);
         draw();
     }
@@ -243,7 +245,7 @@ $(document).ready(function()    {
         for (var i=0; i < 26; i++)  {
             $('#'+alpha[i]).show();
         }
-    }    
+    }
 
     */
 });
@@ -307,4 +309,3 @@ $(document).ready(function()    {
     {x} delete item
 
 */
-
