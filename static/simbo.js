@@ -27,6 +27,8 @@ $(document).ready(function()    {
 
     /****** building the interface ******/
     function build_variable_div()    {
+		update_list();
+		
         // build drop down menu for distributions
         $('#distribution_dd_menu').html('');
 		$.getJSON('/api/distribution_schema', function (response) {
@@ -45,7 +47,7 @@ $(document).ready(function()    {
             }
         });
 
-        $('#http_copy_box').val(http_copy_code);
+        $('#http_copy_box').val(uuid);
 
         $('#default_dd').dropdown(); 
 
@@ -132,7 +134,11 @@ $(document).ready(function()    {
 
     ///// user clicked "new experiment" button
     $('#application_nav_btn').click(function()    {
-      uuid = guid();
+		uuid = prompt("Experiment Name:");
+		if(!uuid.length)
+			uuid = guid();
+		// generate input form
+		build_variable_div();
         $('#home_div').hide();
         $('#application_div').show();
     });
@@ -229,8 +235,6 @@ $(document).ready(function()    {
 		});
 	});
 
-	// generate input form
-    build_variable_div();
 });
 
 /*
