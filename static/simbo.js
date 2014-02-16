@@ -59,19 +59,15 @@ $(document).ready(function()    {
 				var var_name = $('#feature_form.ui.form').form('get field', "variable_name").val();
 				var distr_var = $("#distribution_dd").dropdown("get text");
 				var default_var = $("#default_dd").dropdown("get text");
-				var item = {var_name: {
+				var item = {}
+				item[var_name] = {
 					"default": default_var,
 					"distribution": distr_var,
 					"params": {}
-				}};
+				};
 				console.log(item);
-				$.ajax({
-					type: "PUT",
-					url: "/api/schema/"+uuid,
-					data: item,
-					success: function() {
-						update_list();
-					}
+				$.post("/api/schema/add/"+uuid, item, function() {
+					update_list();
 				});
 			},
 		});		
