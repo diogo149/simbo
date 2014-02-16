@@ -47,3 +47,6 @@ timestamp/
 
 # virtualenv
 env/
+
+# emacs
+*~
