@@ -11,13 +11,4 @@ Python
 
 - Packages in requirements.txt
 
-R
-
-- R 3.0.2
-
-- rhdf5 library
-
-```
-source("http://bioconductor.org/biocLite.R")
-biocLite("rhdf5")
-```
+- requirements of [python-nvd3](https://github.com/areski/python-nvd3)

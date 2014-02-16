@@ -32,6 +32,8 @@ name: A/Z testing
 * Plotting
 -R's shiny?
 -[[http://stackoverflow.com/questions/15592144/how-to-integrate-r-shiny-into-current-application][integrating r into current platform]]
+-[[http://www.rstudio.com/shiny/server/install-opensource][installing shiny server]]
+-[[https://github.com/rstudio/shiny-server/wiki/Building-Shiny-Server-from-Source][installing shiny server from source]]
 * Interface
 * FAQ
 -random search picture from [[http://jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf][here]]
