@@ -45,3 +45,7 @@ h1	{
     padding-bottom: 5px;
     z-index: 100;
 }
+
+.ui.table tbody tr:nth-child(2n) {
+  background-color: #E9FFE6;
+}

@@ -41,7 +41,9 @@ $(document).ready(function()    {
         html_text += item[1];
         html_text += '</td><td>';
         html_text += item[2];
-        html_text += '</td><td><div class="tiny ui icon button edit_item"><i class="edit icon"></i></div></td><td><div class="tiny ui icon button delete_item"><i class="remove icon"></i></div></td></tr>';
+        html_text += '</td><td>';
+        html_text += '<div class="tiny ui icon button edit_item"   style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large edit sign icon" style="color:white;"></i></div></td><td>';
+        html_text += '<div class="tiny ui icon button delete_item" style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large remove icon" style="color:white;"></i></div></td></tr>';
 
         return html_text;
     }
