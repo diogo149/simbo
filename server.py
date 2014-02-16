@@ -6,7 +6,10 @@ import flask
 import settings
 import distributions
 from data_handling import *
+from timestamp_queue import TimestampQueue
 
+
+TQ = TimestampQueue(settings.queue_folder, settings.queue_limit)
 
 app = flask.Flask(__name__,
                   static_folder='static',
@@ -36,7 +39,7 @@ def overwrite_schema(uuid):
 
 @app.route('/api/sample/<uuid>', methods=['GET'])
 def sample_experiment(uuid):
-    # TODO take in json (for personalization)
+    # future: optionally take in json (for personalization)
     return get_experiment(uuid)
 
 
@@ -47,7 +50,9 @@ def experiment_results(uuid):
         or "_id" not in data
         or "_obj" not in data):
         flask.abort(400) # bad request
-    # TODO handle data
+
+    update_dataset(uuid, data["_id"], data["_obj"])
+    TQ.push(uuid)
     return "Success"
 
 
@@ -70,4 +75,7 @@ if __name__ == '__main__':
         os.mkdir(settings.data_folder)
     except OSError:
         pass
+    # run background task that takes things off the queue
+    # and recomputes samples for experiments
+    os.system("python data_handling.py &")
     app.run()

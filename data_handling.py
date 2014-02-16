@@ -1,5 +1,7 @@
 from uuid import uuid1
 import random
+import sys
+import time
 
 import joblib
 
@@ -89,5 +91,30 @@ def get_experiment(uuid):
     return experiment
 
 
-def generate_random(schema, num):
+def update_dataset(uuid, _id, _obj):
+    # TODO
+    # read in dataset
+    # read in experiment
+    # append experiment to dataset
+    # read in schema
+    # remove cols not in schema
+    pass
+
+
+def sample_points(schema, num):
     pass # TODO
+
+
+def regenerate_points_loop():
+    TQ = TimestampQueue(settings.queue_folder, settings.queue_limit)
+    while True:
+        val = TQ.pop()
+        if val is not None:
+            # TODO regenerate points
+            pass
+        else:
+            time.sleep(settings.loop_sleep)
+
+
+if __name__ == "__main__":
+    regenerate_points_loop()
