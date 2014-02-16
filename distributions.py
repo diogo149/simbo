@@ -25,3 +25,8 @@ DISTRIBUTIONS_SCHEMA = dict(
     # choice={"num_values": "int"},
     binary={},
 )
+
+
+def generate_random(distribution_type, params, points):
+    distribution = DISTRIBUTIONS[distribution_type](**params)
+    return distribution.generate(points)

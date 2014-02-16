@@ -1,18 +1,16 @@
-import flask
+import os
 import json
-import joblib
 
+import flask
+
+import settings
 import distributions
+from data_handling import *
 
 
 app = flask.Flask(__name__,
                   static_folder='static',
                   static_url_path='')
-
-### Utility functions
-
-def schema_pkl(uuid):
-    return"data/{}_schema.pkl".format(uuid)
 
 
 ### Schema routes
@@ -20,19 +18,16 @@ def schema_pkl(uuid):
 
 @app.route('/api/schema/<uuid>', methods=['GET'])
 def show_schema(uuid): # not necessary, use single page app
-    try:
-        schema = joblib.load(schema_pkl(uuid))
-    except:
-        schema = {}
+    schema = read_schema(uuid)
     return json.dumps(schema)
 
 
 @app.route('/api/schema/<uuid>', methods=['POST'])
-def add_to_schema(uuid):
+def overwrite_schema(uuid):
     data = flask.request.json
     if not data:
         flask.abort(400) # bad request
-    joblib.dump(data, schema_pkl(uuid))
+    write_schema(uuid, data)
     return "Success"
 
 
@@ -42,15 +37,15 @@ def add_to_schema(uuid):
 @app.route('/api/sample/<uuid>', methods=['GET'])
 def sample_experiment(uuid):
     # TODO take in json (for personalization)
-    # TODO see if any precomputed settings are available
-    # TODO fill in missing fields with defaults
-    return "TODO"
+    return get_experiment(uuid)
 
 
 @app.route('/api/sample/<uuid>', methods=['POST'])
 def experiment_results(uuid):
     data = flask.request.json
-    if not data:
+    if (not data
+        or "_id" not in data
+        or "_obj" not in data):
         flask.abort(400) # bad request
     # TODO handle data
     return "Success"
@@ -71,4 +66,8 @@ def distribution_schema():
 
 
 if __name__ == '__main__':
+    try:
+        os.mkdir(settings.data_folder)
+    except OSError:
+        pass
     app.run()
