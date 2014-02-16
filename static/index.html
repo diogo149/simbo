@@ -10,14 +10,14 @@
   </head>
   <body>
     <!-- inital starter page -->
-    <div id="home-page">
+    <div id="home_div">
       <center>
       <h1 class="ui header">
         Simbo
       </h1>
 
-      <div class="ui button" onclick="window.location='semantic2.html';">
-        New Experiment
+      <div class="ui button" id="application_nav_btn">
+        new experiment
       </div>
       </center>
 
@@ -31,14 +31,14 @@
     </div>
 
     <!-- application page -->
-    <div id="application">
+    <div id="application_div">
       <center>
       <h1 class="ui header">
         Simbo - Experiments -
       </h1>    
 
-      <div class="ui button" onclick="window.location='semantic1.html';">
-        back to main menu
+      <div class="ui button" id="home_nav_btn">
+        back home
       </div>
       </center>  
 
@@ -47,31 +47,42 @@
       </div>
 
       <div class="ui tabular menu">
-        <a class="active item">
+        <a class="active item" id="variables_tab">
           Independent Variables
         </a>
-        <a class="item">
+        <a class="item" id="visuals_tab">
           Visualisazations
         </a>
       </div>
 
-
-      <div class="ui form">
-        <div class="ui three fields">
-          <div class="field">
-            <label>First name</label>
-            <input type="text" placeholder="First Name">
-          </div>
-          <div class="field">
-            <label>Middle name</label>
-            <input type="text" placeholder="Middle Name">
-          </div>
-          <div class="field">
-            <label>Last name</label>
-            <input type="text" placeholder="Last Name">
+      <!-- independent variables form section -->
+      <div id="variables_sec">
+        <div class="ui form">
+          <div class="ui three fields">
+            <div class="field">
+              <label>First name</label>
+              <input type="text" placeholder="First Name">
+            </div>
+            <div class="field">
+              <label>Middle name</label>
+              <input type="text" placeholder="Middle Name">
+            </div>
+            <div class="field">
+              <label>Last name</label>
+              <input type="text" placeholder="Last Name">
+            </div>
           </div>
         </div>
       </div>
+
+      <!-- visualizations section -->
+      <div id="visuals_sec">
+        blah blah blah lady gaga
+        <img src="http://cricages.com/wp-content/uploads/bar-graph.gif" />
+      </div>
+
+
+      
     </div>
     
   </body>
