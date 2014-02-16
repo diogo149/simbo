@@ -6,6 +6,7 @@ Werkzeug==0.9.4
 backports.ssl-match-hostname==3.4.0.2
 ipython==1.2.0
 itsdangerous==0.23
+joblib==0.7.1
 numexpr==2.3
 numpy==1.8.0
 pymongo==2.6.3
