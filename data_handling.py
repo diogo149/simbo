@@ -200,10 +200,17 @@ def regenerate_points(uuid):
     keys = sorted(schema.keys())
     dataset = read_dataset(uuid)
     train, target = dataset_to_matrix(schema, dataset)
+
+    # with open("gen.log", "w") as outfile:
+    #     outfile.write(str(train))
+    #     outfile.write(str(target))
+
     if len(target) < settings.min_points_for_smbo:
         # don't generate dataset if not enough points,
         # use random search instead
         return
+    with open("gen.log", "a") as outfile:
+        outfile.write("adad")
     points = sample_points(schema)
     scores, importances = ml.score_points(train, target, points)
 
@@ -211,7 +218,16 @@ def regenerate_points(uuid):
     write_importances(uuid, dict(zip(keys, importances)))
 
     # save top points
+    # with open("gen.log", "a") as outfile:
+    #     outfile.write(str(scores))
+    #     outfile.write(str(len(points)))
+
+    # FIXME some error here
     top_points = sorted(zip(scores, points))[:settings.keep_points]
+    # with open("gen.log", "a") as outfile:
+    #     outfile.write(str(top_points))
+    #     outfile.write(str(top_points.__class__))
+
     experiments = [point_to_experiment(schema, p[1]) for p in top_points ]
     write_experiments(uuid, experiments)
 
