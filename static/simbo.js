@@ -4,13 +4,14 @@ $(document).ready(function()    {
     var num_distributions = 1;
     var default_var = "";
     var distr_var = "";
+    var http_copy_code = "kittens";
 
     /**********************************************
      ** interactive indepdent variables building **
      **********************************************/
 
     /****** building the interface ******/
-    function build_variable_input_form()    {
+    function build_variable_div()    {
         // build drop down menu for distributions
         $('#distribution_dd_menu').html('');
         var i;
@@ -31,6 +32,8 @@ $(document).ready(function()    {
                 distr_var = val;
             }
         });
+
+        $('#http_copy_box').attr('placeholder', http_copy_code);
     }
 
     /****** interaction functionality ******/
@@ -153,8 +156,7 @@ $(document).ready(function()    {
         update_list();
     });
 
-    build_variable_input_form();
-    //$('.ui.dropdown').dropdown();
+    build_variable_div();
 
 	$("#foo").click(function() {
 		$.get( "/test/scatter", function( data ) {
