@@ -1,0 +1,15 @@
+Cython==0.20.1
+Flask==0.10.1
+Jinja2==2.7.2
+MarkupSafe==0.18
+Werkzeug==0.9.4
+backports.ssl-match-hostname==3.4.0.2
+ipython==1.2.0
+itsdangerous==0.23
+numexpr==2.3
+numpy==1.8.0
+pyzmq==14.0.1
+scikit-learn==0.14.1
+scipy==0.13.3
+tornado==3.2
+wsgiref==0.1.2

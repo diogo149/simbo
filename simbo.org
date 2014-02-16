@@ -1,0 +1,47 @@
+* Notes
+area: A/B testing
+name: A/Z testing
+** problem:
+-allows for testing only one variable at a time
+-married to a non-data-driven concept (statistical significance)
+-tests are sensitive to when they are tested (e.g. shopping website pre-christmas)
+-static exploitation-exploration trade-off (why waste 50% of traffic on a worse feature)
+-developers are trying to solve an optimization problem with a technique that is not good for finding optimal solutions
+** symptoms:
+-slow changes
+-stopping testing early (so you can test something else)
+-might have to wait in line for a very critical feature
+-manually scheduling tests, and being subject to human  bias on importance/ordering
+-exponential number of tests to determine feature interaction
+-if you take a greedy approach (eliminating features when they perform poorly), potentially missing out on a completely different route
+** solution:
+-can essentially ignore the features that are useless
+-can test as many variables at the same time, the moment they are available
+-can test a feature for as long as you want
+-dynamic exploitation-exploration trade-off (slowly, but surely creep towards 0%)
+-personalize your testing based on user information (be able to take in some user data and use that to predict the best settings to use)
+** technical details:
+-can use sequential model based optimzation for higher dimensional
+-use some sort of imputation to deal with missing data
+-can start off super simple, use built-in libraries for SMBO, and essentially a wrapper around mongo
+-you can think of existing A/B testing as grid search in a way; it can work for low dimensionalities but completely breaks down for higher ones which leads to a greedy search
+-visualization tool
+ -e.g. filters on user demographics and most recent choices for certain variables
+-ideally we want online models only so we dont have to retrain for every data point
+* Optimization
+-expected improvement formula from [[http://www.cs.ubc.ca/~hutter/papers/11-LION5-SMAC.pdf][here]]
+* Plotting
+-R's shiny?
+-[[http://stackoverflow.com/questions/15592144/how-to-integrate-r-shiny-into-current-application][integrating r into current platform]]
+* Interface
+* FAQ
+-random search picture from [[http://jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf][here]]
+-expected improvement formula from [[http://www.cs.ubc.ca/~hutter/papers/11-LION5-SMAC.pdf][here]]
+* Presentation
+-emphasize that this is an experiment
+-include who am i?
+ -invited speaker at NIPS (specifically on the causality workshop)
+* Future
+-include personalization
+
+-use online models
