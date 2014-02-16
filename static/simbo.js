@@ -7,18 +7,18 @@ $(document).ready(function()    {
     var default_var = "";
     var distr_var = "";
 
-  var uuid;
+	var uuid;
 
-  var s4 = function () {
-    return Math.floor((1 + Math.random()) * 0x10000)
-      .toString(16)
-      .substring(1);
-  };
+	var s4 = function () {
+		return Math.floor((1 + Math.random()) * 0x10000)
+			.toString(16)
+			.substring(1);
+	};
 
-  var guid = function () {
-    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
-      s4() + '-' + s4() + s4() + s4();
-  };
+	var guid = function () {
+		return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+			s4() + '-' + s4() + s4() + s4();
+	};
 
     /**********************************************
      ** interactive indepdent variables building **
@@ -65,8 +65,14 @@ $(document).ready(function()    {
 					"params": {}
 				}};
 				console.log(item);
-				variables.push(item);
-				update_list();
+				$.ajax({
+					type: "PUT",
+					url: "/api/schema/"+uuid,
+					data: item,
+					success: function() {
+						update_list();
+					}
+				});
 			},
 		});		
     }
@@ -74,11 +80,11 @@ $(document).ready(function()    {
     /****** interaction functionality ******/
     function make_html_item(item, i)   {
         var html_text = '<tr value="'+i+'"><td>';
-        html_text += item[0];
+        html_text += item.name;
         html_text += '</td><td>';
-        html_text += item[1];
+        html_text += item.distribution;
         html_text += '</td><td>';
-        html_text += item[2];
+        html_text += item.default;
         html_text += '</td><td>';
         //html_text += '<div class="tiny ui icon button edit_item"   style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large edit sign icon" style="color:white;"></i></div></td><td>';
         html_text += '<div class="tiny ui icon button delete_item" style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large remove icon" style="color:white;"></i></div></td></tr>';
@@ -88,9 +94,14 @@ $(document).ready(function()    {
 
     function update_list()  {
         $('#item_table_body').html("");
-        for (var i=0; i<variables.length; i++)  {
-            $('#item_table_body').append(make_html_item(variables[i], i));
-        }
+		$.getJSON('/api/schema/'+uuid, function (response) {
+			var i= 1;
+			for (var d in response) {
+				var dist = response[d];
+				dist.name = d;
+				$('#item_table_body').append(make_html_item(dist), i++);
+			}
+		});
     }
 
     ///// user clicked "new experiment" button
