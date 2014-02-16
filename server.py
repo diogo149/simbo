@@ -32,8 +32,32 @@ def overwrite_schema(uuid):
     data = flask.request.json
     if not data:
         flask.abort(400) # bad request
-    write_schema(str(uuid), data)
+    write_schema(uuid, data)
     return "Success"
+
+
+@app.route('/api/schema/add/<string:uuid>', methods=['POST'])
+def add_to_schema(uuid):
+    data = flask.request.json
+    if not data:
+        flask.abort(400) # bad request
+    schema = read_schema(uuid)
+    schema.update(data)
+    write_schema(uuid, schema)
+    return "Success"
+
+
+@app.route('/api/schema/delete/<string:uuid>', methods=['POST'])
+def delete_from_schema(uuid):
+    data = flask.request.json
+    if not data:
+        flask.abort(400) # bad request
+    schema = read_schema(uuid)
+    for key in data:
+        schema.pop(key)
+    write_schema(uuid, schema)
+    return "Success"
+
 
 ### Sample routes
 
@@ -60,13 +84,13 @@ def experiment_results(uuid):
 
 
 @app.route('/api/graph/importances/<string:uuid>', methods=['GET'])
-def importances_graph(graph, uuid):
+def importances_graph(uuid):
     k, v = load_importances(uuid)
     return graphs.pie_chart(k, v)
 
 
 @app.route('/api/graph/results/<string:uuid>', methods=['GET'])
-def results_graph(graph, uuid):
+def results_graph(uuid):
     xs, ys, keys = results_per_variable(uuid)
     return graphs.scatter_chart(xs, ys, keys)
 

@@ -1,10 +1,25 @@
 $(document).ready(function()    {
+	var uuid = undefined;
+
 
     var variables = [];
     var num_distributions = 1;
     var default_var = "";
     var distr_var = "";
     var http_copy_code = "kittens";
+
+	var uuid;
+
+	var s4 = function () {
+		return Math.floor((1 + Math.random()) * 0x10000)
+			.toString(16)
+			.substring(1);
+	};
+
+	var guid = function () {
+		return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+			s4() + '-' + s4() + s4() + s4();
+	};
 
     /**********************************************
      ** interactive indepdent variables building **
@@ -14,18 +29,15 @@ $(document).ready(function()    {
     function build_variable_div()    {
         // build drop down menu for distributions
         $('#distribution_dd_menu').html('');
-        var i;
-        // indexes at 1
-        $('#distribution_dd_menu').append('<div class="item" data-value="1">1</div>');
-        for (i=2; i<=num_distributions; i++) {
-            $('#distribution_dd_menu').append('<div class="item" data-value="'+i.toString()+'">'+i.toString()+'</div>');
-        }
-
-        $('#default_dd').dropdown({
-            onChange: function (val) {
-                default_var = val;
-            }
-        });
+		$.getJSON('/api/distribution_schema', function (response) {
+			var active = "active";
+			for (var dist in response) {
+				if(active.length)
+					$('#distribution_dd .text').html(dist);
+				$('#distribution_dd_menu').append('<div class="item '+active+'" data-value="'+ dist +'">'+dist+'</div>'); 
+				active = "";
+			}
+		});
 
         $('#distribution_dd').dropdown({
             onChange: function (val) {
@@ -34,18 +46,56 @@ $(document).ready(function()    {
         });
 
         $('#http_copy_box').attr('placeholder', http_copy_code);
+
+        $('#default_dd').dropdown(); 
+
+        $('#distribution_dd').dropdown();
+
+		$("#feature_form.ui.form").form({
+			//item validation
+			variable_name: {
+			  	identifier: 'variable_name',
+			  	rules: [
+			  		{
+			  		    type   : 'empty',
+			  			prompt : 'Please enter variable name'
+			  		}
+			  	]
+			}
+		}, {
+			// item submission
+			onSuccess: function(foo){
+				var var_name = $('#feature_form.ui.form').form('get field', "variable_name").val();
+				var distr_var = $("#distribution_dd").dropdown("get text");
+				var default_var = $("#default_dd").dropdown("get text");
+				var item = {var_name: {
+					"default": default_var,
+					"distribution": distr_var,
+					"params": {}
+				}};
+				console.log(item);
+				$.ajax({
+					type: "PUT",
+					url: "/api/schema/"+uuid,
+					data: item,
+					success: function() {
+						update_list();
+					}
+				});
+			},
+		});		
     }
 
     /****** interaction functionality ******/
     function make_html_item(item, i)   {
         var html_text = '<tr value="'+i+'"><td>';
-        html_text += item[0];
+        html_text += item.name;
         html_text += '</td><td>';
-        html_text += item[1];
+        html_text += item.distribution;
         html_text += '</td><td>';
-        html_text += item[2];
+        html_text += item.default;
         html_text += '</td><td>';
-        html_text += '<div class="tiny ui icon button edit_item"   style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large edit sign icon" style="color:white;"></i></div></td><td>';
+        //html_text += '<div class="tiny ui icon button edit_item"   style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large edit sign icon" style="color:white;"></i></div></td><td>';
         html_text += '<div class="tiny ui icon button delete_item" style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large remove icon" style="color:white;"></i></div></td></tr>';
 
         return html_text;
@@ -53,13 +103,19 @@ $(document).ready(function()    {
 
     function update_list()  {
         $('#item_table_body').html("");
-        for (var i=0; i<variables.length; i++)  {
-            $('#item_table_body').append(make_html_item(variables[i], i));
-        }
+		$.getJSON('/api/schema/'+uuid, function (response) {
+			var i= 1;
+			for (var d in response) {
+				var dist = response[d];
+				dist.name = d;
+				$('#item_table_body').append(make_html_item(dist), i++);
+			}
+		});
     }
 
     ///// user clicked "new experiment" button
     $('#application_nav_btn').click(function()    {
+      uuid = guid();
         $('#home_div').hide();
         $('#application_div').show();
     });
@@ -96,20 +152,14 @@ $(document).ready(function()    {
 
         // change the divider icon
         $('#application_divider').attr('class', 'circular photo icon');
-    });
 
-    // user added an item
-    $("#add_item_btn").click(function()   {
-        var var_name = $("#var_name_input").val();
-        if (distr_var == "" || distr_var == "" || var_name == "") {
-            alert("please do not leave empty fields when inputting an independent variable");
-            return;
-        }
-
-        var item = [var_name, distr_var, default_var];
-        variables.push(item);
-        update_list();
-
+        $.get( "/api/graph/importances/" + uuid, function( data ) {
+          // I think there's an issue loading graphs at the same time...
+          setTimeout(function() {eval(data);}, 100);
+        });
+        $.get( "/api/graph/results/" + uuid, function( data ) {
+          eval(data);
+        });
     });
 
     // user wishes to edit an item
@@ -156,13 +206,14 @@ $(document).ready(function()    {
         update_list();
     });
 
-    build_variable_div();
-
 	$("#foo").click(function() {
 		$.get( "/test/scatter", function( data ) {
                         eval(data);
 		});
 	});
+
+	// generate input form
+    build_variable_div();
 });
 
 /*

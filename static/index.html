@@ -83,29 +83,29 @@
         <center>
         <!-- input section -->
         <div class="container" id="variable_input_div">
-        <h2 style="color:white">Add New Variable</h2> 
+        <h2 style="color:white">Add New Variable</h2>
         <div class="ui form" style="width:75%;text-align:center;font-weight:bold;">
           <div class="ui four fields">
             <div class="field">
               <label style="color:#FFFFFF;">Variable Name</label>
             </div>
             <div class="field">
-              <label style="color:#FFFFFF;">Distribution</label>              
+              <label style="color:#FFFFFF;">Distribution</label>
             </div>
             <div class="field">
-              <label style="color:#FFFFFF;">Default</label>              
+              <label style="color:#FFFFFF;">Default</label>
             </div>
             <div class="field">
-              <label style="color:#FFFFFF;">Submit</label>              
+              <label style="color:#FFFFFF;">Submit</label>
             </div>
           </div>
         </div>
 
-
-        <div class="ui form" style="width:75%;text-align:center;">
+        <!-- input section -->
+        <div class="ui form" id="feature_form" style="width:75%;text-align:center;">
           <div class="ui four fields">
             <div class="field" style="text-align:center;">
-              <input type="text" placeholder="Variable Name" id="var_name_input">
+              <input type="text" name="variable_name" placeholder="Variable Name" id="var_name_input">
             </div>
             <div class="field" style="text-align:center;">
               <!-- <input type="text" placeholder="Distribution" id="distribution_input"> -->
@@ -122,36 +122,35 @@
               <!-- <input type="text" placeholder="Default" id="default_input"> -->
               <div class="ui selection dropdown" id="default_dd">
                 <input type="hidden" name="default">
-                <div class="text">Default</div>
+                <div class="text">off</div>
                 <i class="dropdown icon"></i>
                 <div class="menu" id="default_dd_menu">
-                  <div class="item" data-value="off">off</div>
+                  <div class="item active" data-value="off">off</div>
                   <div class="item" data-value="on">on</div>
                 </div>
               </div>
             </div>
             <div class="field" style="text-align:center;">
-              <div class="ui icon button" id="add_item_btn" style="box-shadow:none;background-image:none;padding:0.8em">
-                <i class="add icon"></i>
+              <div class="ui submit button icon" id="add_item_btn" style="box-shadow:none;background-image:none;padding:0.8em">
+                  <i class="add icon"></i>
               </div>
             </div>
           </div>
         </div>
         </div>
-        
+
         <br />
         <!-- variable list section -->
         <div class="ui horizontal icon divider">
           <i class="circular list layout icon"></i>
         </div><br/>
-        
         <div id="variables_table" style="width:80%;border-radius:5px;">
           <table class="ui celled table segment" id="item_table">
             <thead style="background-color:#A3D39C;color:white;"><tr>
               <th class="ten wide" style="color:white; text-align:center;border:white;">Variable Name</th>
               <th class="two wide" style="color:white; text-align:center;border:white;">Distribution</th>
               <th class="two wide" style="color:white; text-align:center;border:white;">Default</th>
-              <th class="one wide" style="color:white; text-align:center;border:white;">Edit</th>
+              <!-- <th class="one wide" style="color:white; text-align:center;border:white;">Edit</th> -->
               <th class="one wide" style="color:white; text-align:center;border:white;">Delete</th>
             </tr></thead>
             <tbody id="item_table_body">
@@ -164,13 +163,8 @@
 
       <!-- visualizations section -->
       <div id="visuals_sec">
-		  <div class="ui button" id="foo">
-		    Don't Touch This(iTs tOo sPoOkY)
-		  </div>
-                <!-- this is the chart -->
-                <svg id="chart"
-                     style="width:450px;height:450px;">
-                </svg>
+        <svg id="importances_graph" style="width:450px;height:20%px;float:left"></svg>
+        <svg id="results_graph" style="height:450px;width:60%;float:right"></svg>
         <!-- <img src="http://cricages.com/wp-content/uploads/bar-graph.gif" /> -->
       </div>
     </div>

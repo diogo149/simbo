@@ -5,8 +5,7 @@ import BeautifulSoup
 def js_extract(html):
     bs = BeautifulSoup.BeautifulSoup(html)
     script = bs.find("script")
-    # assuming name is hardcoded to ""
-    return script.contents[0].replace("# svg", "#chart")
+    return script.contents[0]
 
 
 def pie_chart(labels, data, label=""):
@@ -19,7 +18,8 @@ def pie_chart(labels, data, label=""):
     extra_serie = {"tooltip": {"y_start": "", "y_end": label}}
     chart.add_serie(y=data, x=labels, extra=extra_serie)
     chart.buildcontent()
-    return js_extract(chart.htmlcontent)
+    # assuming name is hardcoded to ""
+    return js_extract(chart.htmlcontent).replace("# svg", "#importances_graph")
 
 
 def scatter_chart(xs, ys, labels):
@@ -28,4 +28,5 @@ def scatter_chart(xs, ys, labels):
     for x, y, label in zip(xs, ys, labels):
         chart.add_serie(name=label, y=y, x=x, extra=extra_serie)
     chart.buildcontent()
-    return js_extract(chart.htmlcontent)
+    # assuming name is hardcoded to ""
+    return js_extract(chart.htmlcontent).replace("# svg", "#results_graph")
