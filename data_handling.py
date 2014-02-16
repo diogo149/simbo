@@ -197,6 +197,7 @@ def dataset_to_matrix(schema, dataset):
 
 def regenerate_points(uuid):
     schema = read_schema(uuid)
+    keys = sorted(schema.keys())
     dataset = read_dataset(uuid)
     train, target = dataset_to_matrix(schema, dataset)
     if len(target) < settings.min_points_for_smbo:
@@ -207,7 +208,6 @@ def regenerate_points(uuid):
     scores, importances = ml.score_points(train, target, points)
 
     # save feature importances
-    keys = sorted(schema.keys())
     write_importances(uuid, dict(zip(keys, importances)))
 
     # save top points
@@ -237,6 +237,16 @@ def load_importances(uuid):
     importances = read_importances(uuid)
     values = [importances.get(key, 0) + 1e-6 for key in keys]
     return keys, values
+
+
+def results_per_variable(uuid):
+    schema = read_schema(uuid)
+    keys = sorted(schema.keys())
+    dataset = read_dataset(uuid)
+    train, target = dataset_to_matrix(schema, dataset)
+    xs = list(train.T)
+    ys = [target for _ in keys]
+    return xs, ys, keys
 
 
 if __name__ == "__main__":

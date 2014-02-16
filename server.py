@@ -59,15 +59,16 @@ def experiment_results(uuid):
 ### Graph routes
 
 
-@app.route('/api/graph/<string:graph>/<string:uuid>', methods=['GET'])
-def get_graph(graph, uuid):
-    if graph == "importances":
-        k, v = load_importances(uuid)
-        return graphs.pie_chart(k, v)
-    elif graph == "results":
-        pass # TODO
-    else:
-        flask.abort(400)
+@app.route('/api/graph/importances/<string:uuid>', methods=['GET'])
+def importances_graph(graph, uuid):
+    k, v = load_importances(uuid)
+    return graphs.pie_chart(k, v)
+
+
+@app.route('/api/graph/results/<string:uuid>', methods=['GET'])
+def results_graph(graph, uuid):
+    xs, ys, keys = results_per_variable(uuid)
+    return graphs.scatter_chart(xs, ys, keys)
 
 
 ### Misc routes
