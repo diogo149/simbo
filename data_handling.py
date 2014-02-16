@@ -2,12 +2,15 @@ from uuid import uuid1
 import random
 import sys
 import time
+import os
 
+import numpy as np
 import joblib
 
 import settings
 import ml
 from distributions import generate_random
+from timestamp_queue import TimestampQueue
 
 
 def uuid():
@@ -15,24 +18,24 @@ def uuid():
 
 
 def schema_pkl(uuid):
-    return os.join(settings.data_folder,
-                   "{}_schema.pkl".format(uuid))
+    return os.path.join(settings.data_folder,
+                        "{}_schema.pkl".format(uuid))
 
 
 def dataset_pkl(uuid):
-    return os.join(settings.data_folder,
-                   "{}_dataset.pkl".format(uuid))
+    return os.path.join(settings.data_folder,
+                        "{}_dataset.pkl".format(uuid))
 
 
 def experiments_pkl(uuid):
-    return os.join(settings.data_folder,
-                   "{}_experiments.pkl".format(uuid))
+    return os.path.join(settings.data_folder,
+                        "{}_experiments.pkl".format(uuid))
 
 
 def ids_pkl():
     # FIXME move to mongo/any document store asap,
     # this is really bad
-    return os.join(settings.data_folder, "ids.pkl")
+    return os.path.join(settings.data_folder, "ids.pkl")
 
 
 def read_schema(uuid):
@@ -91,7 +94,7 @@ def store_experiment(experiment):
     write_experiment(ids)
 
 
-def get_experiment(_id):
+def get_experiment_from_id(_id):
     return read_experiment()[_id]
 
 
@@ -127,8 +130,8 @@ def get_experiment(uuid):
 
 def update_dataset(uuid, _id, _obj):
     dataset = read_dataset(uuid)
-    experiment = get_experiment(_id)
-    experiment[_obj] = _obj
+    experiment = get_experiment_from_id(_id)
+    experiment["_obj"] = _obj
     dataset.append(experiment)
     write_dataset(uuid, dataset)
 
@@ -168,16 +171,20 @@ def dataset_to_matrix(schema, dataset):
         # ignoring data for old experiments,
         # should probably prune
         if point_has_data:
-            row.append()
+            train.append(row)
             target.append(point["_obj"])
 
-    return train, target
+    return np.array(train), np.array(target)
 
 
 def regenerate_points(uuid):
     schema = read_schema(uuid)
     dataset = read_dataset(uuid)
     train, target = dataset_to_matrix(schema, dataset)
+    if len(target) < settings.min_points_for_smbo:
+        # don't generate dataset if not enough points,
+        # use random search instead
+        return
     points = sample_points(schema)
     scores, importances = ml.score_points(train, target, points)
 
@@ -194,8 +201,10 @@ def regenerate_points_loop():
     while True:
         val = TQ.pop()
         if val is not None:
+            print("Regenerating: {}".format(val))
             regenerate_points(val)
         else:
+            print("No values in queue found.")
             time.sleep(settings.loop_sleep)
 
 

@@ -1,0 +1,7 @@
+{
+  "a": {
+    "default": 1,
+    "distribution": "binary",
+    "params": {}
+  }
+}

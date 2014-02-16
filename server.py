@@ -1,5 +1,6 @@
 import os
 import json
+from subprocess import Popen
 
 import flask
 
@@ -19,38 +20,37 @@ app = flask.Flask(__name__,
 ### Schema routes
 
 
-@app.route('/api/schema/<uuid>', methods=['GET'])
+@app.route('/api/schema/<string:uuid>', methods=['GET'])
 def show_schema(uuid): # not necessary, use single page app
     schema = read_schema(uuid)
     return json.dumps(schema)
 
 
-@app.route('/api/schema/<uuid>', methods=['POST'])
+@app.route('/api/schema/<string:uuid>', methods=['POST'])
 def overwrite_schema(uuid):
     data = flask.request.json
     if not data:
         flask.abort(400) # bad request
-    write_schema(uuid, data)
+    write_schema(str(uuid), data)
     return "Success"
 
 
 ### Sample routes
 
 
-@app.route('/api/sample/<uuid>', methods=['GET'])
+@app.route('/api/sample/<string:uuid>', methods=['GET'])
 def sample_experiment(uuid):
     # future: optionally take in json (for personalization)
-    return get_experiment(uuid)
+    return json.dumps(get_experiment(uuid))
 
 
-@app.route('/api/sample/<uuid>', methods=['POST'])
+@app.route('/api/sample/<string:uuid>', methods=['POST'])
 def experiment_results(uuid):
     data = flask.request.json
     if (not data
         or "_id" not in data
         or "_obj" not in data):
         flask.abort(400) # bad request
-
     update_dataset(uuid, data["_id"], data["_obj"])
     TQ.push(uuid)
     return "Success"
@@ -77,5 +77,5 @@ if __name__ == '__main__':
         pass
     # run background task that takes things off the queue
     # and recomputes samples for experiments
-    os.system("python data_handling.py &")
+    Popen(["python", "data_handling.py"])
     app.run()
