@@ -50,3 +50,8 @@ While it would be possible to model/optimize for multiple objective values, we b
 * TODO
 how to seed the data (random search)
 distributions
+single page application
+which graphs to use
+handle data
+create forms
+barchart
