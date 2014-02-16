@@ -1,4 +1,5 @@
 import nvd3
+import BeautifulSoup
 
 """
 from nvd3 import pieChart
@@ -19,6 +20,13 @@ chart.htmlcontent
 
 """
 
+
+def js_extract(html):
+    bs = BeautifulSoup.BeautifulSoup(html)
+    script = bs.find("script")
+    return script.contents[0].replace("# svg", "#chart")
+
+
 def pie_chart(labels, data, name="", label=""):
     chart = nvd3.pieChart(name=name,
                           color_category='category20c',
@@ -29,5 +37,4 @@ def pie_chart(labels, data, name="", label=""):
     extra_serie = {"tooltip": {"y_start": "", "y_end": label}}
     chart.add_serie(y=data, x=labels, extra=extra_serie)
     chart.buildcontent()
-    print chart.htmlcontent
-    return chart.htmlcontent
+    return js_extract(chart.htmlcontent)

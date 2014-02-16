@@ -6,7 +6,7 @@
     <script type='text/javascript' src='http://code.jquery.com/jquery-2.1.0.min.js'></script>
     <link rel='stylesheet' type='text/css' href='css/semantic.min.css'/>
     <script type='text/javascript' src='javascript/semantic.min.js'></script>
-    
+
     <script type='text/javascript' src='simbo.js'></script>
     <link media="all" href="nvd3/src/nv.d3.css" type="text/css" rel="stylesheet" />
     <script src="d3/d3.min.js" type="text/javascript"></script>
@@ -69,16 +69,33 @@
             </div>
             <div class="field">
               <!-- <input type="text" placeholder="Distribution" id="distribution_input"> -->
+              <div class="ui selection dropdown" id="distribution_dd">
+                <input type="hidden" name="distribution">
+                <div class="text">Distribution</div>
+                <i class="dropdown icon"></i>
+                <div class="menu" id="distribution_dd_menu">
+                  <!-- distributions options (populated by js) -->
+                </div>
+              </div>
             </div>
             <div class="field">
-              <input type="text" placeholder="Default" id="default_input">
+              <!-- <input type="text" placeholder="Default" id="default_input"> -->
+              <div class="ui selection dropdown" id="default_dd">
+                <input type="hidden" name="default">
+                <div class="text">Default</div>
+                <i class="dropdown icon"></i>
+                <div class="menu" id="default_dd_menu">
+                  <div class="item" data-value="off">off</div>
+                  <div class="item" data-value="on">on</div>
+                </div>
+              </div>
             </div>
             <div class="field">
               <div class="ui icon button" id="add_item_btn">
                 <i class="add icon"></i>
               </div>
             </div>
-          </div>          
+          </div>
         </div>
 
         <!-- variable list section -->
@@ -94,12 +111,7 @@
             <tbody id="item_table_body">
               <!-- variables list will be displayed here -->
             </tbody>
-            <tfoot>
-              <tr><th colspan="5">
-                <!-- <div class="ui blue labeled icon button"><i class="user icon"></i> Add User</div> -->
-              </th>
-            </tr></tfoot>
-          </table>          
+          </table>
         </div>
       </div>
 
@@ -108,7 +120,10 @@
 		<div class="ui button" id="foo">
 		  Don't Touch This(iTs tOo sPoOkY)
 		</div>
-		<div id="chart"></div>
+                <!-- this is the chart -->
+                <svg id="chart"
+                     style="width:450px;height:450px;">
+                </svg>
         <!-- <img src="http://cricages.com/wp-content/uploads/bar-graph.gif" /> -->
       </div>
     </div>
