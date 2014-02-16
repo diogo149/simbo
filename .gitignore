@@ -36,3 +36,7 @@ nosetests.xml
 .pydevproject
 
 *.org
+
+# Serialized python objects
+*.pkl
+*.npy
