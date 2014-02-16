@@ -1,7 +1,7 @@
 simbo
 =====
 
-An experiment in rethinking A/B testing.
+An experiment in rethinking A/B testing, based on Sequential Model-Based Optimization (SMBO).
 
 Requirements
 ---
