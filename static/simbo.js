@@ -91,6 +91,15 @@ $(document).ready(function()    {
 
         // change the divider icon
         $('#application_divider').attr('class', 'circular photo icon');
+
+        uuid = "1" // TODO fill in uuid
+        $.get( "/api/graph/importances/" + uuid, function( data ) {
+          // I think there's an issue loading graphs at the same time...
+          setTimeout(function() {eval(data);}, 100);
+        });
+        $.get( "/api/graph/results/" + uuid, function( data ) {
+          eval(data);
+        });
     });
 
     // user added an item
@@ -153,12 +162,6 @@ $(document).ready(function()    {
 
     build_variable_input_form();
     //$('.ui.dropdown').dropdown();
-
-	$("#foo").click(function() {
-		$.get( "/test/scatter", function( data ) {
-                        eval(data);
-		});
-	});
 });
 
 /*

@@ -235,7 +235,7 @@ def load_importances(uuid):
     schema = read_schema(uuid)
     keys = sorted(schema.keys())
     importances = read_importances(uuid)
-    values = [importances.get(key, 0) + 1e-6 for key in keys]
+    values = [importances.get(key, 0) + 1e-3 for key in keys]
     return keys, values
 
 

@@ -60,13 +60,13 @@ def experiment_results(uuid):
 
 
 @app.route('/api/graph/importances/<string:uuid>', methods=['GET'])
-def importances_graph(graph, uuid):
+def importances_graph(uuid):
     k, v = load_importances(uuid)
     return graphs.pie_chart(k, v)
 
 
 @app.route('/api/graph/results/<string:uuid>', methods=['GET'])
-def results_graph(graph, uuid):
+def results_graph(uuid):
     xs, ys, keys = results_per_variable(uuid)
     return graphs.scatter_chart(xs, ys, keys)
 
