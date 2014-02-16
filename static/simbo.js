@@ -7,6 +7,19 @@ $(document).ready(function()    {
     var default_var = "";
     var distr_var = "";
 
+  var uuid;
+
+  var s4 = function () {
+    return Math.floor((1 + Math.random()) * 0x10000)
+      .toString(16)
+      .substring(1);
+  };
+
+  var guid = function () {
+    return s4() + s4() + '-' + s4() + '-' + s4() + '-' +
+      s4() + '-' + s4() + s4() + s4();
+  };
+
     /**********************************************
      ** interactive indepdent variables building **
      **********************************************/
@@ -82,6 +95,7 @@ $(document).ready(function()    {
 
     ///// user clicked "new experiment" button
     $('#application_nav_btn').click(function()    {
+      uuid = guid();
         $('#home_div').hide();
         $('#application_div').show();
     });
@@ -119,7 +133,6 @@ $(document).ready(function()    {
         // change the divider icon
         $('#application_divider').attr('class', 'circular photo icon');
 
-        uuid = "1" // TODO fill in uuid
         $.get( "/api/graph/importances/" + uuid, function( data ) {
           // I think there's an issue loading graphs at the same time...
           setTimeout(function() {eval(data);}, 100);
