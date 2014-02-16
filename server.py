@@ -36,7 +36,7 @@ def overwrite_schema(uuid):
     return "Success"
 
 
-@app.route('/api/schema/<string:uuid>', methods=['PUT'])
+@app.route('/api/schema/add/<string:uuid>', methods=['POST'])
 def add_to_schema(uuid):
     data = flask.request.json
     if not data:
@@ -47,7 +47,7 @@ def add_to_schema(uuid):
     return "Success"
 
 
-@app.route('/api/schema/<string:uuid>', methods=['DELETE'])
+@app.route('/api/schema/delete/<string:uuid>', methods=['POST'])
 def delete_from_schema(uuid):
     data = flask.request.json
     if not data:
