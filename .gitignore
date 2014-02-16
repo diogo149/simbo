@@ -36,3 +36,11 @@ nosetests.xml
 .pydevproject
 
 *.org
+
+# Serialized python objects
+*.pkl
+*.npy
+
+# data folders
+data/
+timestamp/

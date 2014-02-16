@@ -18,3 +18,11 @@ h1	{
 	display: none;
 }
 
+#variables_list	{
+	display: none;
+}
+
+#item_table 	{
+	text-align: center;
+	/*color: pink;*/
+}
