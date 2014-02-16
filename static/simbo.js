@@ -1,5 +1,25 @@
 $(document).ready(function()    {
 
+    var variables = [];
+
+    function make_html_item(item, i)   {
+        var html_text = '<tr value="'+i+'"><td>';
+        html_text += item[0];
+        html_text += '</td><td>';
+        html_text += item[1];
+        html_text += '</td><td>';
+        html_text += item[1];
+        html_text += '</td><td><div class="tiny ui icon button edit_item"><i class="edit icon"></i></div></td><td><div class="tiny ui icon button delete_item"><i class="remove icon"></i></div></td></tr>';
+
+        return html_text;
+    }
+
+    function update_list()  {
+        $('#item_table_body').html("");
+        for (var i=0; i<variables.length; i++)  {
+            $('#item_table_body').append(make_html_item(variables[i], i));
+        }
+    }
 
     ///// user clicked "new experiment" button
     $('#application_nav_btn').click(function()    {
@@ -35,7 +55,40 @@ $(document).ready(function()    {
         $('#visuals_sec').show();
     });
 
+    // user added an item
+    $("#add_item_btn").click(function()   {
+        var var_name = $("#var_name_input").val();
+        var distribution_input = $("#distribution_input").val();
+        var default_input = $("#default_input").val();
 
+        var item = [var_name, distribution_input, default_input];
+        variables.push(item);
+        update_list();
+        
+    });
+
+    // user has completed editing an item
+
+    // user wishes to edit an item
+    $(document).on('click', '.edit_item', function() {
+        var par_elm = $(this).parent().parent();
+        var value = $(par_elm).attr('value');
+        $("#var_name_input").val(variables[value][0]);
+        $("#distribution_input").val(variables[value][1]);
+        $("#default_input").val(variables[value][2]);
+
+        // deletes existing item
+        variables.splice(value, 1);
+        update_list();
+    });
+
+    // user wishes to delete an item
+    $(document).on('click', '.delete_item', function() {
+        var par_elm = $(this).parent().parent();
+        var value = $(par_elm).attr('value');
+        variables.splice(value, 1);
+        update_list();
+    });
 
 
 /*
@@ -189,10 +242,63 @@ $(document).ready(function()    {
     */
 });
 
-
+/*
+    <div class="ui horizontal list">
+            <div class="item">
+              var_name
+            </div>
+            <div class="item">
+              distribution_input
+            </div>
+            <div class="item">
+              default_input
+            </div>
+            <div class="item">
+              <div class="ui icon button" id="add_item_btn">
+                <i class="large edit icon"></i>
+              </div>
+            </div>
+            <div class="item">
+              <div class="ui icon button" id="add_item_btn">
+                <i class="large remove icon"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+*/
 /*
 
+    $("#button").click(function()   {
+        var toAdd = $("input[name=checkListItem]").val();
+        $('.list').append("<div class='item'>" + toAdd + "</div>");
+    });
+
+
+    <div class="ui form">
+      <div class="ui four fields">
+        <div class="field">
+          <input type="text" placeholder="Variable Name" id="var_name_input">
+        </div>
+        <div class="field">
+          <input type="text" placeholder="Distribution" id="distribution_input">
+        </div>
+        <div class="field">
+          <input type="text" placeholder="Default" id="default_input">
+        </div>
+        <div class="field">
+          <div class="ui blue submit button" id="add_item_btn">+</div>
+        </div>
+      </div>
+    </div>
 */
 
+/*
+    to-do (variables):
+    { } add labels for input section
+    { } make distributions drop-down
+    { } if certain dist. are selected, add more options
+    {x} edit item
+    {x} delete item
 
+*/
 
