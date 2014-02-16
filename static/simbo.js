@@ -74,6 +74,9 @@ $(document).ready(function()    {
         // change which content is displayed
         $('#visuals_sec').hide();
         $('#variables_sec').show();
+
+        // change the divider icon
+        $('#application_divider').attr('class', 'circular lab icon');
     });
 
     ///// user clicked "visualizations" tab
@@ -85,6 +88,9 @@ $(document).ready(function()    {
         // change which content is displayed
         $('#variables_sec').hide();
         $('#visuals_sec').show();
+
+        // change the divider icon
+        $('#application_divider').attr('class', 'circular photo icon');
     });
 
     // user added an item
