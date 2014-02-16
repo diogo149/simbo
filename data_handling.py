@@ -33,6 +33,11 @@ def experiments_pkl(uuid):
                         "{}_experiments.pkl".format(uuid))
 
 
+def importances_pkl(uuid):
+    return os.path.join(settings.data_folder,
+                        "{}_importances.pkl".format(uuid))
+
+
 def ids_pkl():
     # FIXME move to mongo/any document store asap,
     # this is really bad
@@ -75,6 +80,18 @@ def read_experiments(uuid):
 
 def write_experiments(uuid, experiments):
     joblib.dump(experiments, experiments_pkl(uuid))
+
+
+def read_importances(uuid):
+    try:
+        importances = joblib.load(importances_pkl(uuid))
+    except:
+        importances = {}
+    return importances
+
+
+def write_importances(uuid, data):
+    joblib.dump(data, importances_pkl(uuid))
 
 
 def read_experiment():
@@ -189,7 +206,9 @@ def regenerate_points(uuid):
     points = sample_points(schema)
     scores, importances = ml.score_points(train, target, points)
 
-    # TODO save feature importances
+    # save feature importances
+    keys = sorted(schema.keys())
+    write_importances(uuid, dict(zip(keys, importances)))
 
     # save top points
     top_points = sorted(zip(scores, points))[:settings.keep_points]
@@ -210,6 +229,14 @@ def regenerate_points_loop():
         else:
             print("No values in queue found.")
             time.sleep(settings.loop_sleep)
+
+
+def load_importances(uuid):
+    schema = read_schema(uuid)
+    keys = sorted(schema.keys())
+    importances = read_importances(uuid)
+    values = [importances.get(key, 0) + 1e-6 for key in keys]
+    return keys, values
 
 
 if __name__ == "__main__":

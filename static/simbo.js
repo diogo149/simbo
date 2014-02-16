@@ -24,13 +24,13 @@ $(document).ready(function()    {
             onChange: function (val) {
                 default_var = val;
             }
-        }); 
+        });
 
         $('#distribution_dd').dropdown({
             onChange: function (val) {
                 distr_var = val;
             }
-        });       
+        });
     }
 
     /****** interaction functionality ******/
@@ -125,7 +125,7 @@ $(document).ready(function()    {
         // empty default dd menu
         var default_html = '<input type="hidden" name="default"><div class="text">Default</div><i class="dropdown icon"></i><div class="menu"><div class="item" data-value="off">off</div><div class="item" data-value="on">on</div></div>';
         $('#default_dd').html(default_html);
-        
+
         $('#default_dd').dropdown({
             onChange: function (val) {
                 distr_var = val;
@@ -149,11 +149,8 @@ $(document).ready(function()    {
     //$('.ui.dropdown').dropdown();
 
 	$("#foo").click(function() {
-		$.get( "/foobar", function( data ) {
-			// $("#chart").html( data );
-                        console.log(data);
+		$.get( "/test/pie", function( data ) {
                         eval(data);
-			alert( "Load was performed." );
 		});
 	});
 });
