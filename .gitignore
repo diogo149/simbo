@@ -40,3 +40,7 @@ nosetests.xml
 # Serialized python objects
 *.pkl
 *.npy
+
+# data folders
+data/
+timestamp/

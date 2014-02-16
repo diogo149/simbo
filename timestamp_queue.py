@@ -24,7 +24,8 @@ class TimestampQueue(object):
     def push(self, s):
         self.prune()
         timestamp = int(time.time())
-        with open(os.join(self.folder, str(timestamp)), 'w') as outfile:
+        filename = os.path.join(self.folder, str(timestamp))
+        with open(filename, 'w') as outfile:
             outfile.write(s)
         return self
 
@@ -33,7 +34,7 @@ class TimestampQueue(object):
         files = os.listdir(self.folder)
         if len(files) < 1:
             return None
-        filename = os.join(self.folder, files[0])
+        filename = os.path.join(self.folder, files[0])
         with open(filename) as infile:
             results = infile.read()
         try_remove(filename)
@@ -43,4 +44,4 @@ class TimestampQueue(object):
     def prune(self):
         if self.queue_limit is not None:
             for filename in os.listdir(self.folder)[:-self.queue_limit]:
-                try_remove(os.join(self.folder, filename))
+                try_remove(os.path.join(self.folder, filename))
