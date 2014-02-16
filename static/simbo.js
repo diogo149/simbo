@@ -155,7 +155,7 @@ $(document).ready(function()    {
     //$('.ui.dropdown').dropdown();
 
 	$("#foo").click(function() {
-		$.get( "/test/pie", function( data ) {
+		$.get( "/test/scatter", function( data ) {
                         eval(data);
 		});
 	});

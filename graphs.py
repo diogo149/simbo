@@ -41,9 +41,10 @@ def pie_chart(labels, data, label=""):
     return js_extract(chart.htmlcontent)
 
 
-def scatter_chart(x, y, label=""):
+def scatter_chart(xs, ys, labels):
     chart = nvd3.scatterChart(name="", height=350, x_is_date=False)
-    extra_serie = {"tooltip": {"y_start": "", "y_end": label}}
-    chart.add_serie(name="serie 1", y=y, x=x, extra=extra_serie)
+    extra_serie = {"tooltip": {"y_start": "", "y_end": "value"}}
+    for x, y, label in zip(xs, ys, labels):
+        chart.add_serie(name=label, y=y, x=x, extra=extra_serie)
     chart.buildcontent()
     return js_extract(chart.htmlcontent)

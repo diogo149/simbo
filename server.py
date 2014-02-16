@@ -64,7 +64,8 @@ def get_graph(graph, uuid):
     if graph == "importances":
         k, v = load_importances(uuid)
         return graphs.pie_chart(k, v)
-    elif
+    elif graph == "results":
+        pass # TODO
     else:
         flask.abort(400)
 
@@ -80,7 +81,7 @@ def sample_pie():
 
 @app.route('/test/scatter')
 def sample_scatter():
-    return graphs.scatter_chart((1,2,3,4,5), (5,4,3,2,1))
+    return graphs.scatter_chart(((1,2,3,4,5),), ((5,4,3,2,1), ), ("test", ))
 
 
 @app.route('/', methods=['GET'])
