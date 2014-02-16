@@ -20,3 +20,8 @@ DISTRIBUTIONS = dict(
     # choice=ChoiceDistribution,
     binary=BinaryDistribution,
 )
+
+DISTRIBUTIONS_SCHEMA = dict(
+    # choice={"num_values": "int"},
+    binary={},
+)

@@ -1,4 +1,8 @@
 import flask
+import json
+
+
+import distributions
 
 
 app = flask.Flask(__name__,
@@ -32,6 +36,11 @@ def experiment_results(uuid):
         flask.abort(400) # bad request
     # TODO handle data
     return "Success"
+
+
+@app.route('/api/distribution_schema')
+def distribution_schema():
+    return json.dumps(distributions.DISTRIBUTIONS_SCHEMA)
 
 
 if __name__ == '__main__':
