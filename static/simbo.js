@@ -37,6 +37,12 @@ $(document).ready(function()    {
 
 
 
+	$("#foo").click(function() {
+		$.get( "/foobar", function( data ) {
+			$("#chart").html( data );
+			alert( "Load was performed." );
+		});
+	});
 
 /*
     $('#init_round_btn').click(function()   {

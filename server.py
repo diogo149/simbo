@@ -1,9 +1,7 @@
 import flask
 import json
-
-
 import distributions
-
+import graphs
 
 app = flask.Flask(__name__,
                   static_folder='static',
@@ -19,6 +17,10 @@ def homepage():
 def show_experiment(uuid): # not necessary, use single page app
     return "TODO"
 
+@app.route('/foobar', methods=['GET'])
+def sample_chart():
+    return graphs.pie_chart(["Orange", "Banana", "Pear", "Kiwi", "Apple", "Strawberry", "Pineapple"],
+                            [3, 4, 0, 1, 5, 7, 3])
 
 @app.route('/experiment/sample/<uuid>', methods=['GET'])
 def sample_experiment(uuid):

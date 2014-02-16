@@ -23,9 +23,11 @@ def pie_chart(labels, data, name="", label=""):
     chart = nvd3.pieChart(name=name,
                           color_category='category20c',
                           height=450, width=450)
+    chart.jquery_on_ready = True
 
     #Add the serie
     extra_serie = {"tooltip": {"y_start": "", "y_end": label}}
     chart.add_serie(y=data, x=labels, extra=extra_serie)
     chart.buildcontent()
+    print chart.htmlcontent
     return chart.htmlcontent
