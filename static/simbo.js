@@ -27,6 +27,8 @@ $(document).ready(function()    {
 
     /****** building the interface ******/
     function build_variable_div()    {
+		update_list();
+		
         // build drop down menu for distributions
         $('#distribution_dd_menu').html('');
 		$.getJSON('/api/distribution_schema', function (response) {
@@ -45,7 +47,7 @@ $(document).ready(function()    {
             }
         });
 
-        $('#http_copy_box').attr('placeholder', http_copy_code);
+        $('#http_copy_box').val(uuid);
 
         $('#default_dd').dropdown(); 
 
@@ -67,20 +69,23 @@ $(document).ready(function()    {
 			onSuccess: function(foo){
 				var var_name = $('#feature_form.ui.form').form('get field', "variable_name").val();
 				var distr_var = $("#distribution_dd").dropdown("get text");
-				var default_var = $("#default_dd").dropdown("get text");
-				var item = {var_name: {
+				var default_var = parseInt($("#default_dd").dropdown("get text"));
+				var item = {};
+				item[var_name] = {
 					"default": default_var,
 					"distribution": distr_var,
 					"params": {}
-				}};
+				};
 				console.log(item);
 				$.ajax({
-					type: "PUT",
-					url: "/api/schema/"+uuid,
-					data: item,
+					type: "POST",
+					url: "/api/schema/add/"+uuid,
+					data: JSON.stringify(item),
 					success: function() {
 						update_list();
-					}
+					},
+					dataType: "json",
+					contentType: "application/json; charset=utf-8"
 				});
 			},
 		});		
@@ -96,7 +101,7 @@ $(document).ready(function()    {
         html_text += item.default;
         html_text += '</td><td>';
         //html_text += '<div class="tiny ui icon button edit_item"   style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large edit sign icon" style="color:white;"></i></div></td><td>';
-        html_text += '<div class="tiny ui icon button delete_item" style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large remove icon" style="color:white;"></i></div></td></tr>';
+        html_text += '<div class="tiny ui icon button delete_item'+i+'" style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large remove icon" style="color:white;"></i></div></td></tr>';
 
         return html_text;
     }
@@ -104,18 +109,36 @@ $(document).ready(function()    {
     function update_list()  {
         $('#item_table_body').html("");
 		$.getJSON('/api/schema/'+uuid, function (response) {
-			var i= 1;
+			var index = 0;
 			for (var d in response) {
+				index += 1;
 				var dist = response[d];
 				dist.name = d;
-				$('#item_table_body').append(make_html_item(dist), i++);
+				$('#item_table_body').append(make_html_item(dist, index));
+				var delete_key = {}; delete_key[d] = {};
+				$('.delete_item'+index).click(function() {
+					$.ajax({
+						type: "POST",
+						url: "/api/schema/delete/"+uuid,
+						data: JSON.stringify(delete_key),
+						success: function() {
+							update_list();
+						},
+						dataType: "json",
+						contentType: "application/json; charset=utf-8"
+					});	
+				});
 			}
 		});
     }
 
     ///// user clicked "new experiment" button
     $('#application_nav_btn').click(function()    {
-      uuid = guid();
+		uuid = prompt("Experiment Name:");
+		if(!uuid.length)
+			uuid = guid();
+		// generate input form
+		build_variable_div();
         $('#home_div').hide();
         $('#application_div').show();
     });
@@ -212,8 +235,6 @@ $(document).ready(function()    {
 		});
 	});
 
-	// generate input form
-    build_variable_div();
 });
 
 /*

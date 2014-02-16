@@ -33,7 +33,7 @@ def overwrite_schema(uuid):
     if not data:
         flask.abort(400) # bad request
     write_schema(uuid, data)
-    return "Success"
+    return json.dumps({})
 
 
 @app.route('/api/schema/add/<string:uuid>', methods=['POST'])
@@ -44,19 +44,20 @@ def add_to_schema(uuid):
     schema = read_schema(uuid)
     schema.update(data)
     write_schema(uuid, schema)
-    return "Success"
+    return json.dumps({})
 
 
 @app.route('/api/schema/delete/<string:uuid>', methods=['POST'])
 def delete_from_schema(uuid):
     data = flask.request.json
+    print data
     if not data:
         flask.abort(400) # bad request
     schema = read_schema(uuid)
     for key in data:
         schema.pop(key)
     write_schema(uuid, schema)
-    return "Success"
+    return json.dumps({})
 
 
 ### Sample routes
