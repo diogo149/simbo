@@ -6,6 +6,7 @@ $(document).ready(function()    {
     var num_distributions = 1;
     var default_var = "";
     var distr_var = "";
+    var http_copy_code = "kittens";
 
 	var uuid;
 
@@ -25,7 +26,7 @@ $(document).ready(function()    {
      **********************************************/
 
     /****** building the interface ******/
-    function build_variable_input_form() {
+    function build_variable_div()    {
         // build drop down menu for distributions
         $('#distribution_dd_menu').html('');
 		$.getJSON('/api/distribution_schema', function (response) {
@@ -37,6 +38,14 @@ $(document).ready(function()    {
 				active = "";
 			}
 		});
+
+        $('#distribution_dd').dropdown({
+            onChange: function (val) {
+                distr_var = val;
+            }
+        });
+
+        $('#http_copy_box').attr('placeholder', http_copy_code);
 
         $('#default_dd').dropdown(); 
 
@@ -212,8 +221,14 @@ $(document).ready(function()    {
         update_list();
     });
 
+	$("#foo").click(function() {
+		$.get( "/test/scatter", function( data ) {
+                        eval(data);
+		});
+	});
+
 	// generate input form
-    build_variable_input_form();
+    build_variable_div();
 });
 
 /*
