@@ -145,11 +145,9 @@ $(document).ready(function()    {
         update_list();
     });
 
-<<<<<<< HEAD
     build_variable_input_form();
     //$('.ui.dropdown').dropdown();
 ;
-=======
 	$("#foo").click(function() {
 		$.get( "/foobar", function( data ) {
 			// $("#chart").html( data );
@@ -159,7 +157,6 @@ $(document).ready(function()    {
 		});
 	});
 
->>>>>>> 7eefd1e4a526e42709034aec4a7cca2ffea0946d
 /*
     $('#init_round_btn').click(function()   {
         var phrase_to_guess = $('input[name=phrase_to_guess]').val();
