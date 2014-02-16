@@ -91,11 +91,11 @@
           </div>
         </div>
 
-
-        <div class="ui form" style="width:75%;text-align:center;">
+        <!-- input section -->
+        <div class="ui form" id="feature_form" style="width:75%;text-align:center;">
           <div class="ui four fields">
             <div class="field" style="text-align:center;">
-              <input type="text" placeholder="Variable Name" id="var_name_input">
+              <input type="text" name="variable_name" placeholder="Variable Name" id="var_name_input">
             </div>
             <div class="field" style="text-align:center;">
               <!-- <input type="text" placeholder="Distribution" id="distribution_input"> -->
@@ -112,17 +112,17 @@
               <!-- <input type="text" placeholder="Default" id="default_input"> -->
               <div class="ui selection dropdown" id="default_dd">
                 <input type="hidden" name="default">
-                <div class="text">Default</div>
+                <div class="text">off</div>
                 <i class="dropdown icon"></i>
                 <div class="menu" id="default_dd_menu">
-                  <div class="item" data-value="off">off</div>
+                  <div class="item active" data-value="off">off</div>
                   <div class="item" data-value="on">on</div>
                 </div>
               </div>
             </div>
             <div class="field" style="text-align:center;">
-              <div class="ui icon button" id="add_item_btn" style="box-shadow:none;background-image:none;padding:0.8em">
-                <i class="add icon"></i>
+              <div class="ui submit button icon" id="add_item_btn" style="box-shadow:none;background-image:none;padding:0.8em">
+                  <i class="add icon"></i>
               </div>
             </div>
           </div>
@@ -140,7 +140,7 @@
               <th class="ten wide" style="color:white; text-align:center;border:white;">Variable Name</th>
               <th class="two wide" style="color:white; text-align:center;border:white;">Distribution</th>
               <th class="two wide" style="color:white; text-align:center;border:white;">Default</th>
-              <th class="one wide" style="color:white; text-align:center;border:white;">Edit</th>
+              <!-- <th class="one wide" style="color:white; text-align:center;border:white;">Edit</th> -->
               <th class="one wide" style="color:white; text-align:center;border:white;">Delete</th>
             </tr></thead>
             <tbody id="item_table_body">

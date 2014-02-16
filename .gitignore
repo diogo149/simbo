@@ -44,3 +44,9 @@ nosetests.xml
 # data folders
 data/
 timestamp/
+
+# virtualenv
+env/
+
+# emacs
+*~
