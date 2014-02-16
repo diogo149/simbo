@@ -18,7 +18,7 @@ def rf_factory():
         # if too high, wouldn't be able to fit with less data
         min_samples_leaf=1,
         # True: more stochastic
-        boostrap=True,
+        bootstrap=True,
         # -1 or > 1: train in parallel
         n_jobs=1,
         # change to integer for reproducibility
@@ -34,6 +34,8 @@ def expected_improvement(f_min, mu, sigma):
 
     See http://www.cs.ubc.ca/~hutter/papers/11-LION5-SMAC.pdf
     """
+    # log-scaling might not be the best idea here, especially
+    # if people use negative values to maximize output
     v = (np.log(f_min) - mu) / sigma
     return (f_min * norm.cdf(v)
             - (np.exp(0.5 * sigma ** 2 + mu)
@@ -46,7 +48,7 @@ def random_forest_evaluate(rf, sample_points):
     of input points, and a vector of the standard deviations
     for those predictions.
     """
-    predictions = np.array(
+    preds = np.array(
         map(lambda x: x.predict(sample_points),
             rf.estimators_))
     mu = np.mean(preds, axis=0)

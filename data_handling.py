@@ -193,7 +193,7 @@ def regenerate_points(uuid):
 
     # save top points
     top_points = sorted(zip(scores, points))[:settings.keep_points]
-    experiments = map(point_to_experiment, top_points)
+    experiments = [point_to_experiment(schema, p[1]) for p in top_points ]
     write_experiments(uuid, experiments)
 
 
