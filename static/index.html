@@ -72,9 +72,26 @@
             </div>
             <div class="field">
               <!-- <input type="text" placeholder="Distribution" id="distribution_input"> -->
+              <div class="ui selection dropdown" id="distribution_dd">
+                <input type="hidden" name="distribution">
+                <div class="text">Distribution</div>
+                <i class="dropdown icon"></i>
+                <div class="menu" id="distribution_dd_menu">
+                  <!-- distributions options (populated by js) -->
+                </div>
+              </div>
             </div>
             <div class="field">
-              <input type="text" placeholder="Default" id="default_input">
+              <!-- <input type="text" placeholder="Default" id="default_input"> -->
+              <div class="ui selection dropdown" id="default_dd">
+                <input type="hidden" name="default">
+                <div class="text">Default</div>
+                <i class="dropdown icon"></i>
+                <div class="menu" id="default_dd_menu">
+                  <div class="item" data-value="off">off</div>
+                  <div class="item" data-value="on">on</div>
+                </div>
+              </div>
             </div>
             <div class="field">
               <div class="ui icon button" id="add_item_btn">
@@ -97,11 +114,7 @@
             <tbody id="item_table_body">
               <!-- variables list will be displayed here -->
             </tbody>
-            <tfoot>
-              <tr><th colspan="5">
-                <!-- <div class="ui blue labeled icon button"><i class="user icon"></i> Add User</div> -->
-              </th>
-            </tr></tfoot>
+            <tfoot></tfoot>
           </table>          
         </div>
       </div>
