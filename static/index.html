@@ -26,18 +26,76 @@
 
       </center>
       <br />
-      <div class="ui horizontal icon divider">
-        <i class="circular help icon"></i>
-      </div>
-      <br />
-      <div id="faq">
-        <center>
-        <h2 class="ui header" style="font-size:42pt;">
-          FAQ
-        </h2>
-        </center>
+      <div id="info_div" style="width:80%; margin-left:10%; margin-right:10%">
+        <div class="ui horizontal icon divider">
+          <i class="circular help icon"></i>
+        </div>
+        <div id="faq">
+          <center>
+          <h2 class="ui header" style="font-size:42pt;">FAQ</h2>
+
+          <p style="font-weight:bold;">How do you calculate the best points to use?</p>
+
+          We compute each points' expected positive improvement (see page 8 of <a href="http://www.cs.ubc.ca/~hutter/papers/11-LION5-SMAC.pdf">this paper</a>). To quote the paper:
+
+          > it offers an automatic tradeoff between exploitation (focusing on known good parts of the space) and exploration (gathering more information in unknown parts of the space)
+
+          <p style="font-weight:bold;">What about multiple objective values?</p>
+
+          While it would be possible to model/optimize for multiple objective values, we believe that is is unnecessary. When it comes to making a decision, each of the multiple objectives will have to be combined together to rank the choices, hence that combination having to occur either way. We just require it to happen explicitly.
+
+          <p style="font-weight:bold;">How can random search possibly be better than A/B testing?</p>
+          <br/>
+          <img src="../images/random_search.png" />
+          <br/>
+          A common complaint in our experience and those we have spoken to is that a majority of parameters tested are unimportant. By testing multiple parameters at the same time, one can explore the possible options for the important variables much more quickly.
+
+          Imagine there are 99999 useless parameters to test, and one good one. A grid search (A/B test) would have search through each parameter individually, while random search can search through values of the good parameter with every experiment.
+
+          For more information on the merits of random search, see <a href="http://jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf">this paper</a>.
+
+          <p style="font-weight:bold;">Why not just use random search then?</p>
+
+          Because we can do better! Random search can be very dumb when it comes to searching through parameter space, since it doesn't take into account any history. By taking historic results into account, we can guide the search areas with known good behavior (to search more thoroughly and try to improve on our best) or areas that are poorly explored (since we have little to no information on how good those parameters would behave).
+          </center>
+        </div>
+      
+
+        <div class="ui horizontal icon divider">
+          <i class="circular settings icon"></i>
+        </div>
+
+        <div id="how_it_works">
+          <center>
+          <h2 class="ui header" style="font-size:42pt;">How It Works</h2>
+
+          Initially, parameters will just be randomly spread out through the search space. After a bit of initial exploration is completed, we train a model to learn which areas of the search space are most promising. We then sample a very large number of points from the search space, evaluate which of those points would result in the largest expected improvement, and use the top few of those points as future parameters.
+
+          As an interesting side effect of this implementation, we can combine personalization and A/B testing into the same step, and optimize the variables that one would A/B test for based on user features.
+          </center>
+        </div>
+
+        <div class="ui horizontal icon divider">
+          <i class="circular wrench icon"></i>
+        </div>
+
+        <div id="useage">
+          <center>
+          <h2 class="ui header" style="font-size:42pt;">Usage</h2>
+          </center>
+          <ol>
+            <li>Start a new experiment, or enter the id of an existing one.</li>
+            <li>Enter the schema for your dataset.</li>
+            <li>Send GET requests to your experiment's sample url to get a set of parameters to use.</li>
+            <li>Send POST requests with the _id of those parameters and the result of your objective function (with key _obj) to the same url.</li>
+          </ol>
+          <center>
+            That's it. The parameters should get better and better over time. Feel free to change the schema at any time (make sure each parameter has a unique name) and look at the visualizations to see the results so far.
+          </center>
+        </div>
       </div>
     </div>
+    
 
     <!-- application page -->
     <div id="application_div">
