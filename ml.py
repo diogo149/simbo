@@ -52,3 +52,17 @@ def random_forest_evaluate(rf, sample_points):
     mu = np.mean(preds, axis=0)
     sigma = np.std(preds, axis=0)
     return mu, sigma
+
+
+def score_points(train, target, sample_points):
+    """
+    Given training data and the results for that data,
+    evaluates an array of new points using expected
+    improvement, returning the scores and variable
+    importances.
+    """
+    rf = rf_factory()
+    rf.fit(train, target)
+    mu, sigma = random_forest_evaluate(rf, sample_points)
+    scores = expected_improvement(target.min(), mu, sigma)
+    return scores, rf.feature_importances_
