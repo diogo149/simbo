@@ -45,13 +45,16 @@ $(document).ready(function()    {
 			// item submission
 			onSuccess: function(foo){
 				var var_name = $('#feature_form.ui.form').form('get field', "variable_name").val();
-				var adistr_var = $("#distribution_dd").dropdown("get text");
-				var adefault_var = $("#default_dd").dropdown("get text");
-				var item = [var_name, adistr_var, adefault_var];
+				var distr_var = $("#distribution_dd").dropdown("get text");
+				var default_var = $("#default_dd").dropdown("get text");
+				var item = {var_name: {
+					"default": default_var,
+					"distribution": distr_var,
+					"params": {}
+				}};
 				console.log(item);
 				variables.push(item);
 				update_list();
-
 			},
 		});		
     }
