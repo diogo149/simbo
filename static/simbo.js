@@ -66,8 +66,15 @@ $(document).ready(function()    {
 					"params": {}
 				};
 				console.log(item);
-				$.post("/api/schema/add/"+uuid, item, function() {
-					update_list();
+				$.ajax({
+					type: "POST",
+					url: "/api/schema/add/"+uuid,
+					data: JSON.stringify(item),
+					success: function() {
+						update_list();
+					},
+					dataType: "json",
+					contentType: "application/json; charset=utf-8"
 				});
 			},
 		});		
@@ -83,7 +90,7 @@ $(document).ready(function()    {
         html_text += item.default;
         html_text += '</td><td>';
         //html_text += '<div class="tiny ui icon button edit_item"   style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large edit sign icon" style="color:white;"></i></div></td><td>';
-        html_text += '<div class="tiny ui icon button delete_item" style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large remove icon" style="color:white;"></i></div></td></tr>';
+        html_text += '<div class="tiny ui icon button delete_item'+i+'" style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large remove icon" style="color:white;"></i></div></td></tr>';
 
         return html_text;
     }
@@ -96,6 +103,18 @@ $(document).ready(function()    {
 				var dist = response[d];
 				dist.name = d;
 				$('#item_table_body').append(make_html_item(dist), i++);
+				$('.delete_item'+(i-1)).click(function() {
+					$.ajax({
+						type: "POST",
+						url: "/api/schema/delete/"+uuid,
+						data: "{"+d+":{}}",
+						success: function() {
+							update_list();
+						},
+						dataType: "json",
+						contentType: "application/json; charset=utf-8"
+					});	
+				});
 			}
 		});
     }
