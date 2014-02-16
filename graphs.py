@@ -20,10 +20,12 @@ chart.htmlcontent
 
 """
 
+
 def js_extract(html):
     bs = BeautifulSoup.BeautifulSoup(html)
     script = bs.find("script")
     return script.contents[0].replace("# svg", "#chart")
+
 
 def pie_chart(labels, data, name="", label=""):
     chart = nvd3.pieChart(name=name,
