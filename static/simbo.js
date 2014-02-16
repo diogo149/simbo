@@ -67,8 +67,8 @@ $(document).ready(function()    {
 			onSuccess: function(foo){
 				var var_name = $('#feature_form.ui.form').form('get field', "variable_name").val();
 				var distr_var = $("#distribution_dd").dropdown("get text");
-				var default_var = $("#default_dd").dropdown("get text");
-				var item = {}
+				var default_var = parseInt($("#default_dd").dropdown("get text"));
+				var item = {};
 				item[var_name] = {
 					"default": default_var,
 					"distribution": distr_var,
@@ -107,16 +107,18 @@ $(document).ready(function()    {
     function update_list()  {
         $('#item_table_body').html("");
 		$.getJSON('/api/schema/'+uuid, function (response) {
-			var i= 1;
+			var index = 0;
 			for (var d in response) {
+				index += 1;
 				var dist = response[d];
 				dist.name = d;
-				$('#item_table_body').append(make_html_item(dist), i++);
-				$('.delete_item'+(i-1)).click(function() {
+				$('#item_table_body').append(make_html_item(dist, index));
+				var delete_key = {}; delete_key[d] = {};
+				$('.delete_item'+index).click(function() {
 					$.ajax({
 						type: "POST",
 						url: "/api/schema/delete/"+uuid,
-						data: "{"+d+":{}}",
+						data: JSON.stringify(delete_key),
 						success: function() {
 							update_list();
 						},
