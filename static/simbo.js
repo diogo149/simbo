@@ -45,7 +45,7 @@ $(document).ready(function()    {
             }
         });
 
-        $('#http_copy_box').attr('placeholder', http_copy_code);
+        $('#http_copy_box').val(http_copy_code);
 
         $('#default_dd').dropdown(); 
 
