@@ -3,6 +3,7 @@ import random
 import sys
 import time
 import os
+import traceback
 
 import numpy as np
 import joblib
@@ -202,7 +203,10 @@ def regenerate_points_loop():
         val = TQ.pop()
         if val is not None:
             print("Regenerating: {}".format(val))
-            regenerate_points(val)
+            try:
+                regenerate_points(val)
+            except:
+                traceback.print_exc()
         else:
             print("No values in queue found.")
             time.sleep(settings.loop_sleep)
