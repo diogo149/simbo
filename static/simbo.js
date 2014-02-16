@@ -1,14 +1,46 @@
 $(document).ready(function()    {
 
     var variables = [];
+    var num_distributions = 5;
+    var default_var = "";
+    var distr_var = "";
 
+    /**********************************************
+     ** interactive indepdent variables building **
+     **********************************************/
+
+    /****** building the interface ******/
+    function build_variable_input_form()    {
+        // build drop down menu for distributions
+        $('#distribution_dd_menu').html('');
+        var i;
+        // indexes at 1
+        $('#distribution_dd_menu').append('<div class="item" data-value="1">1</div>');
+        for (i=2; i<=num_distributions; i++) {
+            $('#distribution_dd_menu').append('<div class="item" data-value="'+i.toString()+'">'+i.toString()+'</div>');
+        }
+
+        $('#default_dd').dropdown({
+            onChange: function (val) {
+                default_var = val;
+            }
+        }); 
+
+        $('#distribution_dd').dropdown({
+            onChange: function (val) {
+                distr_var = val;
+            }
+        });       
+    }
+
+    /****** interaction functionality ******/
     function make_html_item(item, i)   {
         var html_text = '<tr value="'+i+'"><td>';
         html_text += item[0];
         html_text += '</td><td>';
         html_text += item[1];
         html_text += '</td><td>';
-        html_text += item[1];
+        html_text += item[2];
         html_text += '</td><td><div class="tiny ui icon button edit_item"><i class="edit icon"></i></div></td><td><div class="tiny ui icon button delete_item"><i class="remove icon"></i></div></td></tr>';
 
         return html_text;
@@ -58,24 +90,47 @@ $(document).ready(function()    {
     // user added an item
     $("#add_item_btn").click(function()   {
         var var_name = $("#var_name_input").val();
-        var distribution_input = $("#distribution_input").val();
-        var default_input = $("#default_input").val();
+        if (distr_var == "" || distr_var == "" || var_name == "") {
+            alert("please do not leave empty fields when inputting an independent variable");
+            return;
+        }
 
-        var item = [var_name, distribution_input, default_input];
+        var item = [var_name, distr_var, default_var];
         variables.push(item);
         update_list();
 
     });
-
-    // user has completed editing an item
 
     // user wishes to edit an item
     $(document).on('click', '.edit_item', function() {
         var par_elm = $(this).parent().parent();
         var value = $(par_elm).attr('value');
         $("#var_name_input").val(variables[value][0]);
-        $("#distribution_input").val(variables[value][1]);
-        $("#default_input").val(variables[value][2]);
+
+        // emtpy distribution dd menu
+        var dist_html = '<input type="hidden" name="distribution"><div class="text">Distribution</div><i class="dropdown icon"></i><div class="menu" id="distribution_dd_menu"></div>';
+        var i;
+        $('#distribution_dd').html(dist_html);
+        $('#distribution_dd_menu').append('<div class="item" data-value="1">1</div>');
+        for (i=2; i<=num_distributions; i++) {
+            $('#distribution_dd_menu').append('<div class="item" data-value="'+i.toString()+'">'+i.toString()+'</div>');
+        }
+
+        $('#distribution_dd').dropdown({
+            onChange: function (val) {
+                distr_var = val;
+            }
+        });
+
+        // empty default dd menu
+        var default_html = '<input type="hidden" name="default"><div class="text">Default</div><i class="dropdown icon"></i><div class="menu"><div class="item" data-value="off">off</div><div class="item" data-value="on">on</div></div>';
+        $('#default_dd').html(default_html);
+        
+        $('#default_dd').dropdown({
+            onChange: function (val) {
+                distr_var = val;
+            }
+        });
 
         // deletes existing item
         variables.splice(value, 1);
@@ -90,6 +145,11 @@ $(document).ready(function()    {
         update_list();
     });
 
+<<<<<<< HEAD
+    build_variable_input_form();
+    //$('.ui.dropdown').dropdown();
+;
+=======
 	$("#foo").click(function() {
 		$.get( "/foobar", function( data ) {
 			// $("#chart").html( data );
@@ -99,6 +159,7 @@ $(document).ready(function()    {
 		});
 	});
 
+>>>>>>> 7eefd1e4a526e42709034aec4a7cca2ffea0946d
 /*
     $('#init_round_btn').click(function()   {
         var phrase_to_guess = $('input[name=phrase_to_guess]').val();
