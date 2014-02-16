@@ -9,13 +9,15 @@ Despite being big believers in A/B testing, there are some flaws that we believe
 
 - Poor scalability to higher dimensional parameter spaces: since the search space grows exponentially in the number of variables to test, practicioners are generally forced into testing a small subset of variables on their own.
 
+- One parameter at a time: A lot of time is just wasted testing parameters that have absolutely no effect.
+
 - Greedy/local search is a poor optimization algorithm: because of the previous point, decisions are often made in a sequential manner, which excludes entire regions of the search space. Even if this may not be that big of an issue in some domains, it could result in a much slower convergence rate compared to other algorithms.
 
 
 Requirements
 ---
 
-Python
+This was tested on:
 
 - Python 2.7.6
 
@@ -28,10 +30,22 @@ Running
 
 `python server.py`
 
+Usage
+---
+
+1. Start a new experiment, or enter the id of an existing one.
+2. Enter the schema for your dataset.
+3. Send GET requests to your experiment's sample url to get a set of parameters to use.
+4. Send POST requests with the _id of those parameters and the result of your objective function (with key _obj) to the same url.
+
+That's it. The parameters should get better and better over time. Feel free to change the schema at any time (make sure each parameter has a unique name) and look at the visualizations to see the results so far.
+
 How It Works
 ---
 
-TODO
+Initially, parameters will just be randomly spread out through the search space. After a bit of initial exploration is completed, we train a model to learn which areas of the search space are most promising. We then sample a very large number of points from the search space, evaluate which of those points would result in the largest expected improvement, and use the top few of those points as future parameters.
+
+As an interesting side effect of this implementation, we can combine personalization and A/B testing into the same step, and optimize the variables that one would A/B test for based on user features.
 
 FAQ
 ---

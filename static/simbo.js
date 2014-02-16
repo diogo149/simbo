@@ -15,7 +15,6 @@ $(document).ready(function()    {
     function build_variable_input_form() {
         // build drop down menu for distributions
         $('#distribution_dd_menu').html('');
-        
 		$.getJSON('/api/distribution_schema', function (response) {
 			var active = "active";
 			for (var dist in response) {
@@ -67,7 +66,9 @@ $(document).ready(function()    {
         html_text += item[1];
         html_text += '</td><td>';
         html_text += item[2];
-        html_text += '</td><td><div class="tiny ui icon button edit_item"><i class="edit icon"></i></div></td><td><div class="tiny ui icon button delete_item"><i class="remove icon"></i></div></td></tr>';
+        html_text += '</td><td>';
+        //html_text += '<div class="tiny ui icon button edit_item"   style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large edit sign icon" style="color:white;"></i></div></td><td>';
+        html_text += '<div class="tiny ui icon button delete_item" style="box-shadow:none;background-image:none;padding:0.5em;background-color:#E45F56;"><i class="large remove icon" style="color:white;"></i></div></td></tr>';
 
         return html_text;
     }
@@ -100,6 +101,9 @@ $(document).ready(function()    {
         // change which content is displayed
         $('#visuals_sec').hide();
         $('#variables_sec').show();
+
+        // change the divider icon
+        $('#application_divider').attr('class', 'circular lab icon');
     });
 
     ///// user clicked "visualizations" tab
@@ -111,6 +115,18 @@ $(document).ready(function()    {
         // change which content is displayed
         $('#variables_sec').hide();
         $('#visuals_sec').show();
+
+        // change the divider icon
+        $('#application_divider').attr('class', 'circular photo icon');
+
+        uuid = "1" // TODO fill in uuid
+        $.get( "/api/graph/importances/" + uuid, function( data ) {
+          // I think there's an issue loading graphs at the same time...
+          setTimeout(function() {eval(data);}, 100);
+        });
+        $.get( "/api/graph/results/" + uuid, function( data ) {
+          eval(data);
+        });
     });
 
     // user wishes to edit an item
@@ -137,7 +153,7 @@ $(document).ready(function()    {
         // empty default dd menu
         var default_html = '<input type="hidden" name="default"><div class="text">Default</div><i class="dropdown icon"></i><div class="menu"><div class="item" data-value="off">off</div><div class="item" data-value="on">on</div></div>';
         $('#default_dd').html(default_html);
-        
+
         $('#default_dd').dropdown({
             onChange: function (val) {
                 distr_var = val;
@@ -159,16 +175,6 @@ $(document).ready(function()    {
 
 	// generate input form
     build_variable_input_form();
-
-	// graph test 
-	$("#foo").click(function() {
-		$.get( "/foobar", function( data ) {
-			// $("#chart").html( data );
-                        console.log(data);
-                        eval(data);
-			alert( "Load was performed." );
-		});
-	});
 });
 
 /*
