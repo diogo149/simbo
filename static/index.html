@@ -50,45 +50,54 @@
 
       </center>
       <br />
-      <div class="ui horizontal icon divider">
-        <i class="circular lab icon" id="application_divider"></i>
+      <div class="ui divider">
       </div>
-
+      <br />
       <div class="ui tabular menu">
         <a class="active item" id="variables_tab">
+          <i class="lab icon"></i>
           Independent Variables
         </a>
         <a class="item" id="visuals_tab">
+          <i class="photo icon"></i>
           Visualisazations
         </a>
       </div>
 
       <!-- independent variables form section -->
       <div id="variables_sec">
-        <div class="ui form">
+        <br />
+        <div class="ui horizontal icon divider">
+          <i class="circular pencil icon"></i>
+        </div>
+        <center>
+        <!-- input section -->
+        <div class="container" id="variable_input_div">
+        <h2 style="color:white">Add New Variable</h2> 
+        <div class="ui form" style="width:75%;text-align:center;font-weight:bold;">
           <div class="ui four fields">
             <div class="field">
-              <label>Variable Name</label>
+              <label style="color:#FFFFFF;">Variable Name</label>
             </div>
             <div class="field">
-              <label>Distribution</label>              
+              <label style="color:#FFFFFF;">Distribution</label>              
             </div>
             <div class="field">
-              <label>Default</label>              
+              <label style="color:#FFFFFF;">Default</label>              
             </div>
             <div class="field">
-              <label>Submit</label>              
+              <label style="color:#FFFFFF;">Submit</label>              
             </div>
           </div>
         </div>
 
-        <!-- input section -->
-        <div class="ui form">
+
+        <div class="ui form" style="width:75%;text-align:center;">
           <div class="ui four fields">
-            <div class="field">
+            <div class="field" style="text-align:center;">
               <input type="text" placeholder="Variable Name" id="var_name_input">
             </div>
-            <div class="field">
+            <div class="field" style="text-align:center;">
               <!-- <input type="text" placeholder="Distribution" id="distribution_input"> -->
               <div class="ui selection dropdown" id="distribution_dd">
                 <input type="hidden" name="distribution">
@@ -99,7 +108,7 @@
                 </div>
               </div>
             </div>
-            <div class="field">
+            <div class="field" style="text-align:center;">
               <!-- <input type="text" placeholder="Default" id="default_input"> -->
               <div class="ui selection dropdown" id="default_dd">
                 <input type="hidden" name="default">
@@ -111,23 +120,29 @@
                 </div>
               </div>
             </div>
-            <div class="field">
+            <div class="field" style="text-align:center;">
               <div class="ui icon button" id="add_item_btn">
                 <i class="add icon"></i>
               </div>
             </div>
           </div>
         </div>
-
+        </div>
+        </center>
+        <br />
         <!-- variable list section -->
+        <div class="ui horizontal icon divider">
+          <i class="circular list layout icon"></i>
+        </div><br/>
+        
         <div id="variables_table">
           <table class="ui celled table segment" id="item_table">
-            <thead><tr>
-              <th class="ten wide">Variable Name</th>
-              <th class="two wide">Distribution</th>
-              <th class="two wide">Default</th>
-              <th class="one wide">Edit</th>
-              <th class="one wide">Delete</th>
+            <thead style="background-color:#A3D39C;color:white;"><tr>
+              <th class="ten wide" style="color:white; text-align:center;border:white;">Variable Name</th>
+              <th class="two wide" style="color:white; text-align:center;border:white;">Distribution</th>
+              <th class="two wide" style="color:white; text-align:center;border:white;">Default</th>
+              <th class="one wide" style="color:white; text-align:center;border:white;">Edit</th>
+              <th class="one wide" style="color:white; text-align:center;border:white;">Delete</th>
             </tr></thead>
             <tbody id="item_table_body">
               <!-- variables list will be displayed here -->

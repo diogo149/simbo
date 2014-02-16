@@ -30,3 +30,18 @@ h1	{
 #var_name_input	{
 	width: 100%;
 }
+
+.container {
+/*    position: absolute;*/
+    border-radius: 5px;
+/*    top: 150px;
+    left: 400px;
+    right: 400px;
+    bottom: 250px;*/
+    width:80%;
+    /*color: #354458;*/
+    background-color:#A3D39C;
+    padding-top:5px;
+    padding-bottom: 5px;
+    z-index: 100;
+}
