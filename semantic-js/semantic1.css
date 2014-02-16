@@ -1,0 +1,11 @@
+body {
+	font-family: "Lucida Console", Monaco, monospace;
+}
+
+h1	{
+	/*min-height: 2rem;*/
+  	/*line-height: 2.67;*/
+  	font-size: 5.0em;
+	margin-left: auto;
+    margin-right: auto;
+}
