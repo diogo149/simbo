@@ -80,10 +80,10 @@
         </div>
 
         <!-- input section -->
-        <div class="ui form">
+        <div class="ui form" id="feature_form">
           <div class="ui four fields">
             <div class="field">
-              <input type="text" placeholder="Variable Name" id="var_name_input">
+              <input type="text" name="variable_name" placeholder="Variable Name" id="var_name_input">
             </div>
             <div class="field">
               <!-- <input type="text" placeholder="Distribution" id="distribution_input"> -->
@@ -100,17 +100,17 @@
               <!-- <input type="text" placeholder="Default" id="default_input"> -->
               <div class="ui selection dropdown" id="default_dd">
                 <input type="hidden" name="default">
-                <div class="text">Default</div>
+                <div class="text">off</div>
                 <i class="dropdown icon"></i>
                 <div class="menu" id="default_dd_menu">
-                  <div class="item" data-value="off">off</div>
+                  <div class="item active" data-value="off">off</div>
                   <div class="item" data-value="on">on</div>
                 </div>
               </div>
             </div>
             <div class="field">
-              <div class="ui icon button" id="add_item_btn">
-                <i class="add icon"></i>
+              <div class="ui submit button icon" id="add_item_btn">
+                  <i class="add icon"></i>
               </div>
             </div>
           </div>
