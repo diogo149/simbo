@@ -75,6 +75,6 @@ For more information on the merits of random search, see [this paper](http://jml
 Because we can do better! Random search can be very dumb when it comes to searching through parameter space, since it doesn't take into account any history. By taking historic results into account, we can guide the search areas with known good behavior (to search more thoroughly and try to improve on our best) or areas that are poorly explored (since we have little to no information on how good those parameters would behave).
 
 Inspiration
-___________
+---
 
 Most of the inspiration for the project comes from the following paper [J. Bergstra and Y. Bengio (2012): Random Search for Hyper-Parameter Optimization](http://jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf).
