@@ -28,7 +28,7 @@ $(document).ready(function()    {
     /****** building the interface ******/
     function build_variable_div()    {
 		update_list();
-		
+
         // build drop down menu for distributions
         $('#distribution_dd_menu').html('');
 		$.getJSON('/api/distribution_schema', function (response) {
@@ -36,7 +36,7 @@ $(document).ready(function()    {
 			for (var dist in response) {
 				if(active.length)
 					$('#distribution_dd .text').html(dist);
-				$('#distribution_dd_menu').append('<div class="item '+active+'" data-value="'+ dist +'">'+dist+'</div>'); 
+				$('#distribution_dd_menu').append('<div class="item '+active+'" data-value="'+ dist +'">'+dist+'</div>');
 				active = "";
 			}
 		});
@@ -47,9 +47,9 @@ $(document).ready(function()    {
             }
         });
 
-        $('#http_copy_box').val(uuid);
+        $('#http_copy_box').val("http://localhost:5000/api/sample/" + uuid);
 
-        $('#default_dd').dropdown(); 
+        $('#default_dd').dropdown();
 
         $('#distribution_dd').dropdown();
 
@@ -88,7 +88,7 @@ $(document).ready(function()    {
 					contentType: "application/json; charset=utf-8"
 				});
 			},
-		});		
+		});
     }
 
     /****** interaction functionality ******/
@@ -126,7 +126,7 @@ $(document).ready(function()    {
 						},
 						dataType: "json",
 						contentType: "application/json; charset=utf-8"
-					});	
+					});
 				});
 			}
 		});

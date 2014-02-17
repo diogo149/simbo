@@ -50,3 +50,5 @@ env/
 
 # emacs
 *~
+
+*.log
