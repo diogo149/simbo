@@ -222,8 +222,7 @@ def regenerate_points(uuid):
     #     outfile.write(str(scores))
     #     outfile.write(str(len(points)))
 
-    # FIXME some error here
-    top_points = sorted(zip(scores, points.T))[:settings.keep_points]
+    top_points = sorted(zip(scores, points), key=lambda x: x[0])[:settings.keep_points]
     # with open("gen.log", "a") as outfile:
     #     outfile.write(str(top_points))
     #     outfile.write(str(top_points.__class__))
