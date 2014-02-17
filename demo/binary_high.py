@@ -32,18 +32,20 @@ def to_int(v):
 def objective_function(a1, a2, a3, **kwargs):
     return (sum([to_int(x) for x in kwargs.values()])
             + 100 * a1
-            + 200 * a2
-            - 50 * a3)
+            + 200 * a2)
 
 keys = ['a' + str(x) for x in range(1, 51)]
-experiment = uuid()
+experiment = "binary_high" # uuid()
 experiment_url += experiment
 schema_url += experiment
 schema = gen_schema(keys)
 
 requests.post(schema_url, data=json.dumps(schema), headers=headers)
 
+iteration = 0
 while True:
+    iteration += 1
+    print iteration
     r = requests.get(experiment_url)
     in_data = r.json()
     out_data = dict(_id = in_data["_id"], _obj=objective_function(**in_data))

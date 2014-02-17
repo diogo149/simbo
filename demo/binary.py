@@ -31,7 +31,7 @@ def objective_function(a, b, **kwargs):
             - 5 * (a * b))
 
 keys = ['a', 'b']
-experiment = uuid()
+experiment = "binary" # uuid()
 experiment_url += experiment
 schema_url += experiment
 schema = gen_schema(keys)
