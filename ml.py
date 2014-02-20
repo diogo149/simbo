@@ -36,7 +36,8 @@ def expected_improvement(f_min, mu, sigma):
     """
     # log-scaling might not be the best idea here, especially
     # if people use negative values to maximize output
-    v = (np.log(f_min) - mu) / sigma
+    # v = (np.log(f_min) - mu) / sigma
+    v = (f_min - mu) / sigma
     return (f_min * norm.cdf(v)
             - (np.exp(0.5 * sigma ** 2 + mu)
                * norm.cdf(v - sigma)))

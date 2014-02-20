@@ -32,7 +32,8 @@ def to_int(v):
 def objective_function(a1, a2, a3, **kwargs):
     return (sum([to_int(x) for x in kwargs.values()])
             + 100 * a1
-            + 200 * a2)
+            + 200 * a2
+            - 50 * a3)
 
 keys = ['a' + str(x) for x in range(1, 51)]
 experiment = "binary_high" # uuid()
