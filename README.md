@@ -13,7 +13,6 @@ Despite being big believers in A/B testing, there are some flaws that we believe
 
 - Greedy/local search is a poor optimization algorithm: because of the previous point, decisions are often made in a sequential manner, which excludes entire regions of the search space. Even if this may not be that big of an issue in some domains, it could result in a much slower convergence rate compared to other algorithms.
 
-
 Requirements
 ---
 
@@ -50,6 +49,22 @@ As an interesting side effect of this implementation, we can combine personaliza
 FAQ
 ---
 
+#### How well does it work? ####
+
+It seemed to work quite well (see the demo code in /demo). Additionally, the optimization algorithm is incredibly simple and should be very easy to optimize for whatever use case one might have.
+
+#### Quantitatively, how does this compare to A/B testing? ####
+
+We can't tell. A/B testing is by design a manual process (see above regarding scheduling), and it's impossible to fairly compare an automatic process to a manual one.
+
+While simbo is meant to solve the same problem as A/B testing, they solve it in very different ways. In our opinions though, each has its uses. A/B testing would be better in scenarios when domain knowledge could allow for quicker convergence to optimal solutions or statistical significance needs to be known, and tools like simbo would be better when data is scarce/expensive, there is a lack of domain knowledge, a team doesn't want to be burned with manual managing tests, or there is a very large search space.
+
+#### How can simbo handle personalization at the same time? ####
+
+The beauty of using SMBO for this is that we use models to learn which sets of parameters work well together. By treating personalization features (e.g. demographics) as constant parameters of the model, the model will attempt to find the best set of parameters including the constant ones, hence each of the free parameters will be optimized for the given personalization features.
+
+Because the technique is very well suited to high-dimensional problems, adding a few additional parameters won't affect the performance too much.
+
 #### How do you calculate the best points to use? ####
 
 We compute each points' expected positive improvement (see page 8 of [this paper](http://www.cs.ubc.ca/~hutter/papers/11-LION5-SMAC.pdf)). To quote the paper:
@@ -74,7 +89,10 @@ For more information on the merits of random search, see [this paper](http://jml
 
 Because we can do better! Random search can be very dumb when it comes to searching through parameter space, since it doesn't take into account any history. By taking historic results into account, we can guide the search areas with known good behavior (to search more thoroughly and try to improve on our best) or areas that are poorly explored (since we have little to no information on how good those parameters would behave).
 
-Inspiration
+Future Plans
 ---
-
-Most of the inspiration for the project comes from the following paper [J. Bergstra and Y. Bengio (2012): Random Search for Hyper-Parameter Optimization](http://jmlr.org/papers/volume13/bergstra12a/bergstra12a.pdf).
+1. Use a real database. (The initial prototype was made during a hackathon, hence a little hacked together).
+1. Redo the web interface.
+1. Add more kinds of distributions for the parameters.
+1. Use online models for the SMBO.
+1. Allow for personalization.
