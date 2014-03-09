@@ -3,7 +3,7 @@ simbo
 
 An experiment in rethinking A/B testing, based on Sequential Model-Based Optimization (SMBO).
 
-Despite being big believers in A/B testing, there are some flaws that we believe can be done without:
+Despite being big believers in A/B testing, there are some flaws that we believe can be done without (note that not all scenarios result in all the issues, but in general there are tradeoffs that need to be made between them):
 
 - Manual intervention: A/B testing is a manual process with scheduling tests and making decisions. Furthermore, these manual steps add human bias to the results.
 
@@ -12,6 +12,10 @@ Despite being big believers in A/B testing, there are some flaws that we believe
 - One parameter at a time: A lot of time is just wasted testing parameters that have absolutely no effect.
 
 - Greedy/local search is a poor optimization algorithm: because of the previous point, decisions are often made in a sequential manner, which excludes entire regions of the search space. Even if this may not be that big of an issue in some domains, it could result in a much slower convergence rate compared to other algorithms.
+
+- Ending experiments early: though not part of proper methodology, it happens at times that experiments are stopped early. This leads to many false positives. (Search for "Most Winning A/B test results are Illusory").
+
+- Starting from scratch: experiments don't take past data into account.
 
 Requirements
 ---
