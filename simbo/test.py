@@ -1,6 +1,5 @@
 from time import time
 import numpy as np
-import pandas as pd
 from sklearn.mixture import GMM
 from sklearn.neighbors import KernelDensity
 

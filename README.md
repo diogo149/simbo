@@ -26,7 +26,7 @@ See `simbo/`. It is pre-alpha, so expect things to change.
 
 ##### Current Status #####
 
-Some infrastructure is done and some comparisons to other methods are ready (A/B testing simulation, etc.)
+Some infrastructure is done and some comparisons to other methods are ready (A/B testing simulation, etc.). See `simbo/test.py` for some comparisons of what's implemented and how to use the functions.
 
 Web Application
 ---
