@@ -22,12 +22,20 @@ Despite being big believers in A/B testing, there are some flaws that we believe
 Optimization Library
 ---
 
-See `simbo/`.
+See `simbo/`. It is pre-alpha, so expect things to change.
+
+##### Current Status #####
+
+Some infrastructure is done and some comparisons to other methods are ready (A/B testing simulation, etc.)
 
 Web Application
 ---
 
 For the webapp from the hackathon, see the `webapp/` folder's README.md for more information.
+
+##### Current Status #####
+
+Not under development.
 
 How It Works
 ---
