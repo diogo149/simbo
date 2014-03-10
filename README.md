@@ -19,31 +19,15 @@ Despite being big believers in A/B testing, there are some flaws that we believe
 
 - Reliance on p-values: a commonly [http://en.wikipedia.org/wiki/P_value#Criticisms](criticized) concept.
 
-Requirements
+Optimization Library
 ---
 
-This was tested on:
+See `simbo/`.
 
-- Python 2.7.6
-
-- Packages in requirements.txt
-
-- requirements of [python-nvd3](https://github.com/areski/python-nvd3)
-
-Running
+Web Application
 ---
 
-`python server.py`
-
-Usage
----
-
-1. Start a new experiment, or enter the id of an existing one.
-2. Enter the schema for your dataset.
-3. Send GET requests to your experiment's sample url to get a set of parameters to use.
-4. Send POST requests with the _id of those parameters and the result of your objective function (with key _obj) to the same url.
-
-That's it. The parameters should get better and better over time. Feel free to change the schema at any time (make sure each parameter has a unique name) and look at the visualizations to see the results so far.
+For the webapp from the hackathon, see the `webapp/` folder's README.md for more information.
 
 How It Works
 ---
@@ -57,7 +41,7 @@ FAQ
 
 #### How well does it work? ####
 
-It seemed to work quite well (see the demo code in /demo). Additionally, the optimization algorithm is incredibly simple and should be very easy to optimize for whatever use case one might have.
+It seemed to work quite well (see the demo code in `webapp/demo/`). Additionally, the optimization algorithm is incredibly simple and should be very easy to optimize for whatever use case one might have.
 
 #### Quantitatively, how does this compare to A/B testing? ####
 
@@ -94,11 +78,3 @@ For more information on the merits of random search, see [this paper](http://jml
 #### Why not just use random search then? ####
 
 Because we can do better! Random search can be very dumb when it comes to searching through parameter space, since it doesn't take into account any history. By taking historic results into account, we can guide the search areas with known good behavior (to search more thoroughly and try to improve on our best) or areas that are poorly explored (since we have little to no information on how good those parameters would behave).
-
-Future Plans
----
-1. Use a real database. (The initial prototype was made during a hackathon, hence a little hacked together).
-1. Redo the web interface.
-1. Add more kinds of distributions for the parameters.
-1. Use online models for the SMBO.
-1. Allow for personalization.
