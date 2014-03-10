@@ -89,6 +89,7 @@ class BucketConditionalGenerator(BaseEstimator):
 class ConditionalGenerator(BaseEstimator):
     """
     creates a conditional generator from a joint distribution generator
+    (y given X)
 
     in order to sample from the conditional distribution for x given y, we
     first generate samples for both variables, then selects
@@ -122,6 +123,29 @@ class ConditionalGenerator(BaseEstimator):
         knn = KNeighborsRegressor(1)
         knn.fit(joint_X, joint_y)
         return knn.predict(X)
+
+
+class TopPercentileGenerator(BaseEstimator):
+    """
+    Generates from only the bottom `percentile` of the input data
+    """
+    def __init__(self, percentile, generator=None):
+        self.percentile = percentile
+        self.generator = generator
+
+    def fit(self, X, scores):
+        if self.generator is None:
+            self.generator_ = CountGenerator()
+        else:
+            self.generator_ = self.generator
+        cutoff = np.percentile(scores, percentile * 100)
+        idx = scores <= cutoff
+        new_X = X[idx]
+        self.generator_.fit(new_X)
+        return self
+
+    def sample(self, n_samples=1, random_state=None):
+        return self.generator_.sample(n_samples, random_state)
 
 
 class MIDependencyTree(BaseEstimator):
@@ -180,6 +204,7 @@ class MIDependencyTree(BaseEstimator):
         for (parent, child), gen in zip(self.edges_, self.generators_):
             X[:, child] = gen.sample(X[:, [parent]], random_state).flatten()
         return X
+
 
 if __name__ == "__main__":
     # just trying it out

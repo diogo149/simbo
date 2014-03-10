@@ -1,6 +1,7 @@
 import numpy as np
 from demo_functions import *
 from ab_test import binary_AB_test_optimizer
+from ga import genetic_optimizer
 from mimic import mimic_optimizer
 from scipy.optimize import minimize
 from generate import CountGenerator, MIDependencyTree, BucketConditionalGenerator
@@ -9,7 +10,7 @@ from sklearn.neighbors import KernelDensity
 
 
 SOLVERS = [
-    'Nelder-Mead',
+    # 'Nelder-Mead',  # scales poorly with higher dimensions
     'Powell',
     # 'CG',  # works poorly without derivative
     # 'BFGS',  # works poorly without derivative
@@ -97,5 +98,12 @@ def demo1(num_features=10, noise_std=1, total_trials=1000):
                                                    cond_generator=BucketConditionalGenerator(CountGenerator())),
                           total_trials=total_trials)
     print_results(ans)
+
+    print "GA"
+    ans = genetic_optimizer(num_features,
+                                   obj_func,
+                                   total_trials=total_trials)
+    print_results(ans)
+
 
 # TODO show graph of expected value vs num trials

@@ -1,5 +1,6 @@
 import numpy as np
 from abba.stats import Experiment as ABExperiment
+from optimize_utils import *
 
 
 def ab_test(baseline_num_successes,
@@ -21,11 +22,13 @@ def ab_test(baseline_num_successes,
     return p_value, rel_improvement.value
 
 
-def binary_AB_test_optimizer(num_features,
-                             objective_function,
-                             num_trials=None,
-                             total_trials=None,
-                             max_p_value=0.05):
+def _minimize_ab_test(fun,
+                      x0,
+                      args=(),
+                      callback=None,
+                      num_trials=100,
+                      maxiter=1000,
+                      max_p_value=0.05):
     """
     sequential A/B testing simulation to minimize an objective function that
     returns 0/1
@@ -35,28 +38,38 @@ def binary_AB_test_optimizer(num_features,
     -the baseline solution is all zeros
 
     parameters:
-    `num_features` : number of binary features the objective function takes
-    `objective_function` : function whose value we want to minimize
     `confidence_level` : the desired p value
     `num_trials` : experiments to run for each of the baseline and variation
-    `total_trials` : total number of trials (note: rounds down)
+    `maxiter` : total number of trials (note: rounds down)
     """
-    if total_trials is not None:
-        num_trials = int(total_trials / num_features / 2)
+    num_features = len(x0)
+    if maxiter is not None:
+        num_trials = int(maxiter / num_features / 2)
 
-    baseline = np.zeros(num_features)
+    baseline = x0.copy()
+    if num_trials < 1:
+        return baseline
+
+    def score(x):
+        res = fun(x, *args)
+        if callback is not None:
+            callback(x)
+        return res
+
     for i in range(num_features):
         baseline_success = 0
         variation_success = 0
         variation = baseline.copy()
         variation[i] = 1 - variation[i] # change 0 to 1 or 1 to 0
         for _ in range(num_trials):
-            baseline_success += objective_function(baseline)
-            variation_success += objective_function(variation)
+            baseline_success += score(baseline)
+            variation_success += score(variation)
         p_value, improvement = ab_test(baseline_success,
                                        num_trials,
                                        variation_success,
                                        num_trials)
         if p_value <= max_p_value and improvement < 0:
             baseline[i] = 1 - baseline[i]
-    return baseline
+    error = float(baseline_success) / num_trials
+    return to_result(x=baseline, fun=error, niter=num_trials,
+                     nfev=num_trials * num_features)

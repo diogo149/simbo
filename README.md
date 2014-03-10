@@ -5,7 +5,7 @@ An experiment in rethinking A/B testing, based on Sequential Model-Based Optimiz
 
 Despite being big believers in A/B testing, there are some flaws that we believe can be done without (note that not all scenarios result in all the issues, but in general there are tradeoffs that need to be made between them):
 
-- Manual intervention: A/B testing is a manual process with scheduling tests and making decisions. Furthermore, these manual steps add human bias to the results.
+- Manual intervention: A/B testing is a manual process with scheduling tests and making decisions. Furthermore, these manual steps add human bias to the results and slow the cycle of development by adding yet another manual step.
 
 - Poor scalability to higher dimensional parameter spaces: since the search space grows exponentially in the number of variables to test, practicioners are generally forced into testing a small subset of variables on their own.
 
@@ -16,6 +16,8 @@ Despite being big believers in A/B testing, there are some flaws that we believe
 - Ending experiments early: though not part of proper methodology, it happens at times that experiments are stopped early. This leads to many false positives. (Search for "Most Winning A/B test results are Illusory").
 
 - Starting from scratch: experiments don't take past data into account.
+
+- Reliance on p-values: a commonly [http://en.wikipedia.org/wiki/P_value#Criticisms](criticized) concept.
 
 Requirements
 ---
