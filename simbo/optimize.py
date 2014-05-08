@@ -1,8 +1,10 @@
 import numpy as np
+import copy
 from scipy.optimize import minimize as sp_minimize
 from mimic import _minimize_mimic
 from genetic import _minimize_genetic
 from greedy import _minimize_rhc, _minimize_twiddle
+from simbo_general import _minimize_simbo_general
 from ab_test import _minimize_ab_test
 from optimize_utils import to_result
 
@@ -46,10 +48,14 @@ def minimize(fun, x0, args=(), method='BFGS', jac=None, hess=None,
     elif method == "genetic":
         return _minimize_genetic(fun, x0, args, callback=callback, **options)
     elif method == "rhc":
-        return _minimize_rhc(fun, x0, args, callback=callback, options=options)
+        return _minimize_rhc(fun, x0, args, callback=callback,
+                             # minimize_rhc mutates options
+                             options=copy.deepcopy(options))
     elif method == "ab_test":
         return _minimize_ab_test(fun, x0, args, callback=callback, **options)
     elif method == "twiddle":
         return _minimize_twiddle(fun, x0, args, callback=callback, **options)
+    elif method == "simbo_general":
+        return _minimize_simbo_general(fun, x0, args, callback=callback, **options)
     else:
         raise ValueError("Unknown solver: %s" % method)

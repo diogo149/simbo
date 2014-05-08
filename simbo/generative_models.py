@@ -9,6 +9,20 @@ from sklearn.mixture import GMM
 from sklearn.neighbors import KernelDensity
 
 
+class DummyGenerator(BaseEstimator):
+    """
+    generates values from random normal
+    """
+    def __init__(self, dim):
+        self.dim = dim
+
+    def fit(self, X):
+        pass
+
+    def sample(self, n_samples=1, random_state=None):
+        return np.random.randn(n_samples, self.dim)
+
+
 class CountGenerator(BaseEstimator):
     """
     generates values by taking counts
